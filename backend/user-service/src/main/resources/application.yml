@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: user-service
+  boot:
+    admin:
+      client:
+        url:
+        - http://localhost:9001
+        enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/swb_users
+    username: root
+    password: Karuppuhari@10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  kafka:
+    bootstrap-servers:
+#      - b-3.bankingmskcluster.canhri.c4.kafka.eu-north-1.amazonaws.com:9092
+#      - b-1.bankingmskcluster.canhri.c4.kafka.eu-north-1.amazonaws.com:9092
+#      - b-2.bankingmskcluster.canhri.c4.kafka.eu-north-1.amazonaws.com:9092
+       localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+#disables Spring Boot’s automatic static resource mappings.
+  web:
+    resources:
+      add-mappings: false
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
+
+jwt:
+  publickey:
+    path: classpath:user-service-public.pem
+
+
+
+info:
+  app:
+    name: User Service
+    description: This service manages user registration, profile updates, and user details.
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
