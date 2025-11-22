@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * Delegates business logic to UserService and handles request/response mapping and logging.
  */
 @RestController
-@RequestMapping("/boi/users")
+@RequestMapping("/swb/users")
 @Slf4j
 public class UserController {
 	
