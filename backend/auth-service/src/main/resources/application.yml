@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: auth-service
+  boot:
+    admin:
+      client:
+        url:
+        - http://localhost:9001
+        enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/swb_authentications
+    username: root
+    password: Karuppuhari@10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+     ddl-auto: update
+    show-sql: true
+
+  data:
+   redis:
+    host: redis-19060.c212.ap-south-1-1.ec2.redns.redis-cloud.com
+    port: 19060
+    password: FgTL2hXAeW2tT1Nh8WOikxKb77K9ql0y
+    ssl:
+     enabled: false
+
+
+  kafka:
+     bootstrap-servers: 
+        localhost:9092
+     producer:
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+     hostname: localhost
+
+jwt:
+   keystore:
+     path: classpath:banking.jks
+     password: changeit
+     key-password: changeit
+   key:
+     alias: auth-service
+     password: changeit
+   publickey:
+     path: classpath:auth-service-public.pem
+
+logging:
+  config: classpath:logback-spring.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
+
+server:
+  port: 8070
+
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
