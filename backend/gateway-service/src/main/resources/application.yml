@@ -1,0 +1,111 @@
+spring:
+  application:
+    name: gateway-service
+#  boot:
+#    admin:
+#      client:
+#        url:
+#        - http://localhost:9001
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/swb/users/**
+          filters:
+            - name: AuthenticationFilter 
+
+        - id: user-service-swagger
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/swagger/user-service
+          filters:
+            - RewritePath=/swagger/user-service, /v3/api-docs 
+#------------------------------------------------------------        
+        - id: account-service
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/swb/account/**
+          filters:
+            - name: AuthenticationFilter
+
+        - id: account-service-swagger
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/swagger/account-service
+          filters:
+            - RewritePath=/swagger/account-service, /v3/api-docs 
+#--------------------------------------------------------------- 
+        - id: transaction-service
+          uri: lb://TRANSACTION-SERVICE
+          predicates:
+            - Path=/swb/transaction/**
+          filters:
+            - name: AuthenticationFilter 
+
+        - id: transaction-service-swagger
+          uri: lb://TRANSACTION-SERVICE
+          predicates:
+           - Path=/swagger/transaction-service
+          filters:
+           - RewritePath=/swagger/transaction-service, /v3/api-docs 
+#---------------------------------------------------------------
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/swb/**
+          filters:
+            - name: AuthenticationFilter
+
+        - id: auth-service-swagger
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/swagger/auth-service
+          filters:
+            - RewritePath=/swagger/auth-service, /v3/api-docs
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+     hostname: localhost
+
+server:
+  port: 8765
+
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    health:
+#      show-details: always
+
+info:
+  app:
+    name: API Gateway
+    description: This service acts as the unified entry point to route requests to microservices securely.
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: user-service
+        url: http://localhost:8765/swagger/user-service
+      - name: account-service
+        url: http://localhost:8765/swagger/account-service
+      - name: transaction-service
+        url: http://localhost:8765/swagger/transaction-service
+      - name: auth-service
+        url: http://localhost:8765/swagger/auth-service
+
