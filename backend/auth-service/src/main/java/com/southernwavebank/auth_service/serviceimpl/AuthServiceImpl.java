@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService{
 	public ResponseEntity<Response> registerUser(RegisterRequest registerRequest) {
 		log.info("Register request received");
 		log.info("Calling user service to register the user");
-		ResponseEntity<Response> entity = webClientBuilder.build().post().uri("http://user-service/boi/users/register")
+		ResponseEntity<Response> entity = webClientBuilder.build().post().uri("http://user-service/swb/users/register")
 				.bodyValue(registerRequest).exchangeToMono(clientResponse -> clientResponse.toEntity(Response.class))
 				.block(); // Blocking call to wait // for response
 		log.info("Received user service response");
@@ -110,7 +110,7 @@ public class AuthServiceImpl implements AuthService{
 		log.info("Login attempt received");
 		// Authenticate with User Service
 		log.info("Calling user service to check user existence against DB");
-		ResponseEntity<Response> entity = webClientBuilder.build().post().uri("http://user-service/boi/users/login")
+		ResponseEntity<Response> entity = webClientBuilder.build().post().uri("http://user-service/swb/users/login")
 				.bodyValue(principal).exchangeToMono(clientResponse -> clientResponse.toEntity(Response.class)).block();
 		log.info("Received user service response");
 
@@ -216,7 +216,7 @@ public class AuthServiceImpl implements AuthService{
 
 		log.info("Calling user service for necessary user details");
 		ResponseEntity<Response> entity = webClientBuilder.build().get()
-				.uri("http://user-service/boi/users/userdata?email=" + username).retrieve().toEntity(Response.class)
+				.uri("http://user-service/swb/users/userdata?email=" + username).retrieve().toEntity(Response.class)
 				.block();
 
 		log.info("Received user service response");
@@ -259,7 +259,7 @@ public class AuthServiceImpl implements AuthService{
 		log.info("Forget password progess started");
 		log.info("Calling user service for forget password process");
 		ResponseEntity<Response> entity = webClientBuilder.build().post()
-				.uri("http://user-service/boi/users/forgot-password").bodyValue(forgetPasswordRequest)
+				.uri("http://user-service/swb/users/forgot-password").bodyValue(forgetPasswordRequest)
 				.exchangeToMono(clientResponse -> clientResponse.toEntity(Response.class)).block();
 
 		log.info("Received user service response");
@@ -329,7 +329,7 @@ public class AuthServiceImpl implements AuthService{
 
 		log.info("Calling user service to reset password");
 		ResponseEntity<Response> entity = webClientBuilder.build().put()
-				.uri("http://user-service/boi/users/update-password").bodyValue(updateRequest)
+				.uri("http://user-service/swb/users/update-password").bodyValue(updateRequest)
 				.exchangeToMono(clientResponse -> clientResponse.toEntity(Response.class)).block();
 		log.info("Received user service response");
 		if (entity == null || !entity.getStatusCode().is2xxSuccessful() || entity.getBody() == null) {
