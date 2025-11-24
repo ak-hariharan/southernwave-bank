@@ -1,0 +1,46 @@
+<configuration>
+
+	<springProperty scope="context" name="PID" source="PID" />
+	<property name="APP_NAME"
+		value="${spring.application.name:-account-service}" />
+
+	<!-- Console appender: default logs shown in console with color -->
+<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>
+            %d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %highlight(%-5level) ${PID:-???} ---[%15.15thread] [%cyan(${APP_NAME})] %green(%logger{50}) : %msg%n
+        </pattern>
+    </encoder>
+</appender>
+
+<!-- File appender: logs saved to a file (no color) -->
+<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>logs/account-operations.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <fileNamePattern>logs/account-operations-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+        <maxFileSize>10MB</maxFileSize>
+        <maxHistory>30</maxHistory>
+        <totalSizeCap>1GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level ${PID:-???} ---[%15.15thread] [${APP_NAME}] %logger{50} : %msg%n</pattern>
+    </encoder>
+</appender>
+
+
+	<logger name="com.bankofindia.account_service" level="DEBUG" additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</logger>
+	
+	<logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<!-- Root logger sends logs to both console and file -->
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

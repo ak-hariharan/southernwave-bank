@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: account-service
+  boot: #actuator service
+    admin:
+      client:
+        url:
+        - http://localhost:9001
+        enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/swb_accounts
+    username: root
+    password: Karuppuhari@10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    properties:
+      jarkarta.persistence.query.timeout: 5000  
+#  Queries can sometimes take a long time to execute, 
+#  especially when working with large data sets
+#  To avoid long-running queries.
+
+  kafka:
+    bootstrap-servers: 
+       localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: true
+    consumer:
+      group-id: account-service-group
+      auto-offset-reset: earliest 
+      enable-auto-commit: false 
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: "com.bankofindia.user_service.model.dto.UserDto:com.bankofindia.account_service.model.externaldto.UserDto"        
+
+jwt:
+   publickey:
+     path: classpath:account-service-public.pem
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    hostname: localhost 
+
+#Register with spring boot admin and Enabling actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
+    info:
+      access: unrestricted
+
+server:
+  port: 8090
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+
+
+
