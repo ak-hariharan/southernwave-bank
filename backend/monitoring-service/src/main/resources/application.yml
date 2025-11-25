@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: monitoring-service
+  boot:
+    admin:
+      discovery:
+        services: "*"
+        enabled: true
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
+
+server:
+  port: 9001
+
+info:
+   app:
+     name: Monitoring Service
+     description: This service monitors and manages all microservices via Spring Boot Admin.
+
