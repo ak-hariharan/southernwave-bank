@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: transaction-service
+  boot:
+    admin:
+      client:
+        url:
+        - http://localhost:9001
+        enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/swb_transactions
+    username: root
+    password: Karuppuhari@10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: 
+#      - b-3.bankingmskcluster.canhri.c4.kafka.eu-north-1.amazonaws.com:9092
+#      - b-1.bankingmskcluster.canhri.c4.kafka.eu-north-1.amazonaws.com:9092
+#      - b-2.bankingmskcluster.canhri.c4.kafka.eu-north-1.amazonaws.com:9092
+       localhost:9092
+    producer:
+       key-serializer: org.apache.kafka.common.serialization.StringSerializer
+       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+       properties:
+         spring.json.add.type.headers: true
+    consumer:
+      group-id: transaction-service-group
+      auto-offset-reset: earliest 
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: "com.bankofindia.account_service.model.externaldto.TransactionDto:com.bankofindia.transaction_service.model.dto.TransactionDto"       
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+     hostname: localhost
+
+jwt:
+   publickey:
+     path: classpath:transaction-service-public.pem
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
+
+server:
+  port: 8100
+
+info:
+  app:
+    name: Transaction Service
+    description: This service handles all banking transactions, including deposits, withdrawals, and transfers.
+
+
