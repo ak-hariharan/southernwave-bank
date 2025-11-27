@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: notification-service
+  boot:
+    admin:
+      client:
+        url:
+        - http://localhost:9001
+        enabled: false #making not again discovered by admin services 
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: customercare.swbank@gmail.com
+    password: zgxc kzzz bvik pwgq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+          ssl:
+            enable: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/notification_db
+    username: root
+    password: Karuppuhari@10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: 
+      - localhost:9092
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest 
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: >
+                 com.southernwavebank.auth_service.model.externaldto.NotificationDto: com.southernwavebank.notification_service.model.dto.NotificationDto,
+                 com.southernwavebank.transaction_service.model.TransactionDto: com.southernwavebank.notification_service.model.externaldto.TransactionDto,
+                 com.southernwavebank.transaction_service.model.externaldto.NotificationDto: com.southernwavebank.notification_service.model.dto.NotificationDto,
+                 com.southernwavebank.account_service.model.externaldto.NotificationDto: com.southernwavebank.notification_service.model.dto.NotificationDto,
+                 com.southernwavebank.user_service.model.externaldto.NotificationDto: com.southernwavebank.notification_service.model.dto.NotificationDto
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
+
+server:
+  port: 8200
+
+
+
+
