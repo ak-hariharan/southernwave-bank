@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: report-service
+  boot:
+    admin:
+      client:
+        url:
+          - http://localhost:9001
+        enabled: false
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/report_db
+    username: root
+    password: Karuppuhari@10
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      access: unrestricted
+
+server:
+  port: 8300
+
+info:
+  app:
+    name: Report Service
+    description: This service generates and manages transaction reports for users.
+
+google:
+  drive:
+    enabled: true
+    credentials:
+      file: classpath:credentials.json  
+    tokens:
+      directory: tokens                  
+    upload:
+      folder-id: 1LTrYEP-ofry138H6_6kcTDBKQOaBkU4z      
+
+
