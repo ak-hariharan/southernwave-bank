@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 // REST controller exposing authentication endpoints for registration, login, token and password flows.
 // Delegates processing to AuthService and handles incoming HTTP requests and responses.
 @RestController
-@RequestMapping("/swb")
+@RequestMapping("/swb/auth")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {

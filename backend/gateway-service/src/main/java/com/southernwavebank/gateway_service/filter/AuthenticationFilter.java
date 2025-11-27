@@ -68,7 +68,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 			log.debug("Validating token with Auth Service");
 			return webClient
 					.get()
-					.uri("http://auth-service/auth/validate")
+					.uri("http://auth-service/swb/auth/validate")
 					.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 					.exchangeToMono(response -> {
 						if(response.statusCode().is2xxSuccessful()) {
@@ -83,7 +83,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 							log.debug("Request is going to: {}", targetService);
 							
 							return webClient.get()
-									.uri("http://auth-service/auth/delegate-token?aud=" + targetService)
+									.uri("http://auth-service/swb/auth/delegate-token?aud=" + targetService)
 									.header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
 									.retrieve()
 									.onStatus(HttpStatusCode::isError, clientResponse -> { 

@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 public class RouteValidator {
 	
 	private static final List<String> openApiEndpoints = List.of(
-	        "/auth/register",
-	        "/auth/login",
-	        "/auth/validate",
-	        "/auth/logout",
-	        "/auth/forget-password",
-	        "/auth/reset-password",
-	        "/auth/refresh",
+	        "/swb/auth/register",
+	        "/swb/auth/login",
+	        "/swb/auth/validate",
+	        "/swb/auth/logout",
+	        "/swb/auth/forget-password",
+	        "/swb/auth/reset-password",
+	        "/swb/auth/refresh",
 	        "/actuator",
 	        "/swagger-ui",
 	        "/v3/api-docs"
