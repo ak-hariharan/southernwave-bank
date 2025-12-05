@@ -37,6 +37,11 @@
 						"styles": [
 							"projects/homemfe/src/styles.scss"
 						],
+						"stylePreprocessorOptions": {
+  							"includePaths": [
+    							"projects/shared/src/lib/styles"
+  							]
+						},
 						"main": "projects/homemfe/src/main.ts",
 						"outputPath": "dist/homemfe",
 						"index": "projects\\homemfe\\src\\index.html",

@@ -1,0 +1,8 @@
+/* Base styles only — generic, not visual design */
+@mixin base-btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}

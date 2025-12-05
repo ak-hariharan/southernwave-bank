@@ -1,8 +1,12 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
+import { MaterialModule } from "../../material/material.module";
 
 @Component({
   selector: 'shared-button',
   templateUrl: './shared-button.html',
-  standalone: true
+  standalone: true,
+  imports: [MaterialModule]
 })
-export class SharedButtonComponent {}
+export class SharedButtonComponent {
+  @Input() disabled = false;
+}

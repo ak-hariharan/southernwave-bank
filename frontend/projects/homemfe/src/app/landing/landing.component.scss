@@ -1,3 +1,5 @@
+@use 'base-button.scss' as baseBtn;
+
 * {
   margin: 0;
   padding: 0;
@@ -8,6 +10,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #ffffff;
   overflow-x: hidden;
+  // font-size: 0.9rem; /* Reduce base font size by 10% */
 }
 
 .container {
@@ -174,41 +177,33 @@
 }
 
 .btn-primary {
+  @include baseBtn.base-btn;
   background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
   color: #0f1729;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-}
+  transition: all 0.3s ease;
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  }
 }
 
 .btn-secondary {
+  @include baseBtn.base-btn;
   background: transparent;
-  color: #d4af37;
+  color: #d4af37 !important;
   border: 2px solid #d4af37;
-  padding: 1rem 2rem;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
   transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: #ffd700;
+    color: #ffd700 !important;
+  }
 }
 
-.btn-secondary:hover {
-  background: rgba(212, 175, 55, 0.1);
-  border-color: #ffd700;
-  color: #ffd700;
-}
 
 /* Phone Mockup */
 .hero-visual {
@@ -639,6 +634,7 @@
 .final-cta .btn-primary {
   background: #0f1729;
   color: #ffffff;
+  padding: 1rem;
 }
 
 .final-cta .btn-primary:hover {
