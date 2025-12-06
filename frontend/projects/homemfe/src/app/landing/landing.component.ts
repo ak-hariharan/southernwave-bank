@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'shared';
+import { SharedModule} from 'shared';
 
 @Component({
   selector: 'app-landing',
@@ -10,10 +10,8 @@ import { SharedModule } from 'shared';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
-  currentYear = new Date().getFullYear();
+  
   selectedLanguage = 'English';
-
-
 
   translations = {
     English: {

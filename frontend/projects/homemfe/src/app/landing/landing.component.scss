@@ -10,7 +10,6 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #ffffff;
   overflow-x: hidden;
-  // font-size: 0.9rem; /* Reduce base font size by 10% */
 }
 
 .container {
@@ -640,41 +639,6 @@
 .final-cta .btn-primary:hover {
   background: #1e2a5e;
   transform: translateY(-2px);
-}
-
-/* Footer */
-.footer {
-  background: #0f172a;
-  padding: 2rem 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-section p {
-  color: rgba(255,255,255,0.7);
-  margin: 0;
-}
-
-.footer-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.footer-links a {
-  color: rgba(255,255,255,0.7);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: #ffffff;
 }
 
 /* Animations */

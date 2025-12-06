@@ -179,17 +179,5 @@
   </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <p>&copy; {{currentYear}} {{currentTranslation.bankName}}. {{currentTranslation.copyright}}</p>
-        </div>
-        <div class="footer-links">
-          <a href="#">{{currentTranslation.termsConditions}}</a>
-          <a href="#">{{currentTranslation.privacyPolicy}}</a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <shared-footer [translation]="currentTranslation"></shared-footer>
 </div>
