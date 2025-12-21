@@ -1,0 +1,162 @@
+// ============================================================================
+// SHARED SCSS VARIABLES - Design System for All MFEs
+// ============================================================================
+// This file contains all design tokens used across micro frontends
+// Import this in any MFE component: @use 'variables' as vars;
+
+// ============================================================================
+// COLOR PALETTE
+// ============================================================================
+
+// Primary Colors
+$color-primary: #d4af37;           // Gold
+$color-primary-light: #ffd700;     // Light Gold
+$color-primary-lighter: #ffed4e;   // Lighter Gold
+
+// Background Colors
+$color-bg-primary: #0f1729;        // Deep Navy
+$color-bg-secondary: #1e2a5e;      // Royal Blue
+$color-bg-tertiary: #2d4a8f;       // Medium Blue
+$color-bg-dark: #0f172a;           // Dark Navy
+
+// Text Colors
+$color-text-primary: #ffffff;
+$color-text-secondary: rgba(255, 255, 255, 0.9);
+$color-text-muted: rgba(255, 255, 255, 0.8);
+$color-text-dark: #0f1729;
+
+// Overlay Colors
+$color-overlay-light: rgba(255, 255, 255, 0.1);
+$color-overlay-medium: rgba(255, 255, 255, 0.15);
+$color-overlay-strong: rgba(255, 255, 255, 0.2);
+
+// Border Colors
+$color-border-primary: rgba(212, 175, 55, 0.2);
+$color-border-primary-hover: rgba(212, 175, 55, 0.6);
+$color-border-light: rgba(255, 255, 255, 0.2);
+
+// ============================================================================
+// TYPOGRAPHY
+// ============================================================================
+
+// Font Families
+$font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+// Font Sizes
+$font-size-xs: 0.7rem;      // 11.2px
+$font-size-sm: 0.9rem;      // 14.4px
+$font-size-base: 1rem;      // 16px
+$font-size-md: 1.1rem;      // 17.6px
+$font-size-lg: 1.2rem;      // 19.2px
+$font-size-xl: 1.3rem;      // 20.8px
+$font-size-2xl: 1.5rem;     // 24px
+$font-size-3xl: 2rem;       // 32px
+$font-size-4xl: 2.5rem;     // 40px
+$font-size-5xl: 4rem;       // 64px
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// Line Heights
+$line-height-tight: 1.1;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.6;
+
+// ============================================================================
+// SPACING SCALE
+// ============================================================================
+
+$spacing-xs: 0.25rem;    // 4px
+$spacing-sm: 0.5rem;     // 8px
+$spacing-md: 1rem;       // 16px
+$spacing-lg: 1.5rem;     // 24px
+$spacing-xl: 2rem;       // 32px
+$spacing-2xl: 2.5rem;    // 40px
+$spacing-3xl: 3rem;      // 48px
+$spacing-4xl: 4rem;      // 64px
+
+// ============================================================================
+// BORDER RADIUS
+// ============================================================================
+
+$radius-sm: 8px;
+$radius-md: 10px;
+$radius-lg: 12px;
+$radius-xl: 15px;
+$radius-2xl: 20px;
+$radius-3xl: 30px;
+$radius-4xl: 40px;
+$radius-full: 50px;
+$radius-circle: 50%;
+
+// ============================================================================
+// SHADOWS
+// ============================================================================
+
+$shadow-sm: 0 4px 15px rgba(212, 175, 55, 0.3);
+$shadow-md: 0 8px 25px rgba(212, 175, 55, 0.4);
+$shadow-lg: 0 10px 30px rgba(212, 175, 55, 0.1);
+$shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.3);
+$shadow-card: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+// ============================================================================
+// TRANSITIONS
+// ============================================================================
+
+$transition-fast: 0.2s;
+$transition-normal: 0.3s;
+$transition-slow: 0.5s;
+
+$transition-ease: ease;
+$transition-ease-in-out: ease-in-out;
+$transition-ease-out: ease-out;
+
+// Common Transitions
+$transition-all: all 0.3s ease;
+$transition-transform: transform 0.3s ease;
+$transition-color: color 0.3s ease;
+$transition-background: background 0.3s ease;
+
+// ============================================================================
+// BREAKPOINTS
+// ============================================================================
+
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-wide: 1200px;
+
+// ============================================================================
+// Z-INDEX SCALE
+// ============================================================================
+
+$z-index-base: 1;
+$z-index-dropdown: 10;
+$z-index-header: 10;
+$z-index-overlay: 50;
+$z-index-modal: 100;
+$z-index-tooltip: 200;
+
+// ============================================================================
+// GRADIENTS
+// ============================================================================
+
+$gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+$gradient-primary-hover: linear-gradient(135deg, $color-primary-light 0%, $color-primary-lighter 100%);
+$gradient-hero: linear-gradient(135deg, $color-bg-primary 0%, $color-bg-secondary 50%, $color-bg-tertiary 100%);
+$gradient-cta: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+$gradient-screen: linear-gradient(135deg, $color-bg-primary 0%, $color-bg-secondary 100%);
+
+// ============================================================================
+// ANIMATION DURATIONS
+// ============================================================================
+
+$animation-duration-fast: 0.5s;
+$animation-duration-normal: 1s;
+$animation-duration-slow: 3s;
+$animation-duration-very-slow: 20s;
