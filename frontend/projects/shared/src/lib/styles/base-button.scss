@@ -1,8 +1,17 @@
-/* Base styles only — generic, not visual design */
+// ============================================================================
+// BASE BUTTON MIXIN
+// ============================================================================
+// Base styles only — generic, not visual design
+// For styled buttons, use mixins from _mixins.scss
+
+@use 'variables' as vars;
+
 @mixin base-btn {
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  border-radius: vars.$radius-lg;
+  font-weight: vars.$font-weight-semibold;
+  font-size: vars.$font-size-base;
   cursor: pointer;
+  border: none;
+  transition: vars.$transition-all;
 }

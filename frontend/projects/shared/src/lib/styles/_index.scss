@@ -1,0 +1,16 @@
+// ============================================================================
+// SHARED STYLES INDEX - Single Entry Point for All MFEs
+// ============================================================================
+// Import this in any MFE component to access all shared styles:
+// @use 'index' as shared;
+//
+// Then use:
+// - shared.$color-primary
+// - @include shared.card-style()
+// - Animation names are global (fadeInUp, slideInUp, etc.)
+
+// Forward all modules to make them available
+@forward 'variables';
+@forward 'mixins';
+@forward 'animations';
+@forward 'base-button';
