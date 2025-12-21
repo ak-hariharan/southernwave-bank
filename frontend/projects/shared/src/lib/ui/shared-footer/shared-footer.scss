@@ -32,3 +32,30 @@
 .footer-links a:hover {
   color: #ffffff;
 }
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+}
+
+.social-link:hover {
+  background: rgba(255,255,255,0.08);
+}
