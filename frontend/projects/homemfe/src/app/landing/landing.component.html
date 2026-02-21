@@ -6,15 +6,19 @@
       <div class="container">
         <div class="header-content">
           <nav class="header-nav">
-            <a href="#" class="header-nav-link">{{currentTranslation.aboutUs}}</a>
+            <a href="#benefits" class="header-nav-link">{{currentTranslation.aboutUs}}</a>
             <div class="language-dropdown">
-              <a href="#" class="header-nav-link">{{selectedLanguage}} 
+              <a href="#" class="header-nav-link">{{selectedLanguage}}
                 <span class="dropdown-arrow">
                   <svg width="20px" height="20px" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" cx="64" cy="64" rx="18.9" ry="44.3"/>
-                    <line fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" x1="22.7" x2="105.3" y1="49.2" y2="49.2"/>
-                    <line fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" x1="92.5" x2="22.7" y1="78.8" y2="78.8"/>
-                    <circle fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" cx="64" cy="64" r="44.3"/>
+                    <ellipse fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                      stroke-linejoin="round" cx="64" cy="64" rx="18.9" ry="44.3" />
+                    <line fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                      stroke-linejoin="round" x1="22.7" x2="105.3" y1="49.2" y2="49.2" />
+                    <line fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                      stroke-linejoin="round" x1="92.5" x2="22.7" y1="78.8" y2="78.8" />
+                    <circle fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                      stroke-linejoin="round" cx="64" cy="64" r="44.3" />
                   </svg>
                 </span></a>
               <div class="language-dropdown-content">
@@ -24,8 +28,8 @@
                 <a href="#" (click)="changeLanguage('German'); $event.preventDefault()">German</a>
               </div>
             </div>
-            <a href="#" class="header-nav-link">{{currentTranslation.contactUs}}</a>
-            <a href="#" class="header-nav-link">{{currentTranslation.help}}</a>
+            <a href="#contact" class="header-nav-link">{{currentTranslation.contactUs}}</a>
+            <a href="#faq" class="header-nav-link">{{currentTranslation.help}}</a>
           </nav>
         </div>
       </div>
@@ -64,23 +68,11 @@
   <section class="features">
     <div class="container">
       <div class="features-grid">
-        <div class="feature-card" *ngFor="let feature of features; let i = index" [style.animation-delay]="i * 0.2 + 's'">
+        <div class="feature-card" *ngFor="let feature of features; let i = index"
+          [style.animation-delay]="i * 0.2 + 's'">
           <div class="feature-icon">{{feature.icon}}</div>
           <h3>{{feature.title}}</h3>
           <p>{{feature.description}}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Demo Highlights -->
-  <section class="demo-highlights">
-    <div class="container">
-      <h2 class="section-title">{{currentTranslation.bankingFeatures}}</h2>
-      <div class="demo-grid">
-        <div class="demo-card" *ngFor="let demo of demoFeatures; let i = index" [style.animation-delay]="i * 0.1 + 's'">
-          <div class="demo-icon">{{demo.icon}}</div>
-          <h4>{{demo.title}}</h4>
         </div>
       </div>
     </div>
@@ -101,10 +93,11 @@
   </section>
 
   <!-- Benefits Section -->
-  <section class="benefits">
+  <section class="benefits" id="benefits">
     <div class="container">
       <div class="benefits-grid">
-        <div class="benefit-card" *ngFor="let benefit of currentTranslation.benefits; let i = index" [style.animation-delay]="i * 0.2 + 's'">
+        <div class="benefit-card" *ngFor="let benefit of currentTranslation.benefits; let i = index"
+          [style.animation-delay]="i * 0.2 + 's'">
           <div class="benefit-icon">{{benefit.icon}}</div>
           <h3>{{benefit.title}}</h3>
           <p>{{benefit.description}}</p>
@@ -118,7 +111,8 @@
     <div class="container">
       <h2 class="section-title">{{currentTranslation.howItWorksTitle}}</h2>
       <div class="steps-grid">
-        <div class="step-card" *ngFor="let step of currentTranslation.howItWorksSteps; let i = index" [style.animation-delay]="i * 0.2 + 's'">
+        <div class="step-card" *ngFor="let step of currentTranslation.howItWorksSteps; let i = index"
+          [style.animation-delay]="i * 0.2 + 's'">
           <div class="step-number">{{step.step}}</div>
           <h3>{{step.title}}</h3>
           <p>{{step.description}}</p>
@@ -132,7 +126,8 @@
     <div class="container">
       <h2 class="section-title">{{currentTranslation.servicesTitle}}</h2>
       <div class="services-grid">
-        <div class="service-card" *ngFor="let service of currentTranslation.services; let i = index" [style.animation-delay]="i * 0.1 + 's'">
+        <div class="service-card" *ngFor="let service of currentTranslation.services; let i = index"
+          [style.animation-delay]="i * 0.1 + 's'">
           <div class="service-icon">{{service.icon}}</div>
           <h3>{{service.title}}</h3>
           <p>{{service.description}}</p>
@@ -147,7 +142,8 @@
       <h2 class="section-title">{{currentTranslation.trustTitle}}</h2>
       <p class="section-subtitle">{{currentTranslation.trustSubtitle}}</p>
       <div class="testimonials-grid">
-        <div class="testimonial-card" *ngFor="let testimonial of currentTranslation.testimonials; let i = index" [style.animation-delay]="i * 0.2 + 's'">
+        <div class="testimonial-card" *ngFor="let testimonial of currentTranslation.testimonials; let i = index"
+          [style.animation-delay]="i * 0.2 + 's'">
           <div class="stars">⭐⭐⭐⭐⭐</div>
           <p>"{{testimonial.text}}"</p>
           <h4>{{testimonial.name}}</h4>
@@ -157,11 +153,12 @@
   </section>
 
   <!-- FAQ Section -->
-  <section class="faq">
+  <section class="faq" id="faq">
     <div class="container">
       <h2 class="section-title">{{currentTranslation.faqTitle}}</h2>
       <div class="faq-grid">
-        <div class="faq-item" *ngFor="let faq of currentTranslation.faqs; let i = index" [style.animation-delay]="i * 0.1 + 's'">
+        <div class="faq-item" *ngFor="let faq of currentTranslation.faqs; let i = index"
+          [style.animation-delay]="i * 0.1 + 's'">
           <h3>{{faq.question}}</h3>
           <p>{{faq.answer}}</p>
         </div>
@@ -170,7 +167,7 @@
   </section>
 
   <!-- Final CTA -->
-  <section class="final-cta">
+  <section class="final-cta" id="contact">
     <div class="container">
       <h2>{{currentTranslation.finalCtaTitle}}</h2>
       <p>{{currentTranslation.finalCtaSubtitle}}</p>

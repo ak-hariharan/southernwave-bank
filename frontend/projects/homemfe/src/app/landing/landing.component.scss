@@ -303,39 +303,6 @@
 }
 
 // ============================================================================
-// DEMO HIGHLIGHTS
-// ============================================================================
-
-.demo-highlights {
-  background: shared.$color-bg-secondary;
-  @include shared.section-spacing;
-}
-
-.demo-grid {
-  @include shared.grid-auto-fit(200px, shared.$spacing-lg);
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.demo-card {
-  @include shared.card-simple;
-  padding: shared.$spacing-xl shared.$spacing-md;
-  @include shared.fade-in-up;
-}
-
-.demo-icon {
-  font-size: shared.$font-size-4xl;
-  margin-bottom: shared.$spacing-md;
-}
-
-.demo-card h4 {
-  font-size: shared.$font-size-md;
-  font-weight: shared.$font-weight-semibold;
-  color: shared.$color-text-primary;
-  margin: 0;
-}
-
-// ============================================================================
 // SECURITY SECTION
 // ============================================================================
 
@@ -370,6 +337,7 @@
 .benefits {
   background: shared.$color-bg-dark;
   @include shared.section-spacing;
+  scroll-margin-top: shared.$spacing-xl;
 }
 
 .benefits-grid {
@@ -522,6 +490,7 @@
 .faq {
   background: shared.$color-bg-dark;
   @include shared.section-spacing;
+  scroll-margin-top: shared.$spacing-xl;
 }
 
 .faq-grid {
@@ -557,6 +526,7 @@
   background: shared.$gradient-cta;
   @include shared.section-spacing;
   text-align: center;
+  scroll-margin-top: shared.$spacing-xl;
 
   h2 {
     color: shared.$color-text-dark;

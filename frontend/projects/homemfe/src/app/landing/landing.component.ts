@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule} from 'shared';
+import { SharedModule } from 'shared';
 
 @Component({
   selector: 'app-landing',
@@ -10,7 +10,7 @@ import { SharedModule} from 'shared';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
-  
+
   selectedLanguage = 'English';
 
   translations = {
@@ -26,7 +26,6 @@ export class LandingComponent {
       send: 'Send',
       receive: 'Receive',
       pay: 'Pay',
-      bankingFeatures: 'Banking Features',
       securityTitle: 'Bank-Level Security',
       securitySubtitle: 'Your money and data are protected with industry-leading security measures',
       benefits: [
@@ -97,13 +96,6 @@ export class LandingComponent {
           title: '24/7 Support',
           description: 'Get help whenever you need it with our round-the-clock customer support.'
         }
-      ],
-      demoFeatures: [
-        { icon: '💰', title: 'Accounts' },
-        { icon: '🔄', title: 'Transfers' },
-        { icon: '💳', title: 'Payments' },
-        { icon: '📄', title: 'Statements' },
-        { icon: '💎', title: 'Cards' }
       ]
     },
     Spanish: {
@@ -118,7 +110,6 @@ export class LandingComponent {
       send: 'Enviar',
       receive: 'Recibir',
       pay: 'Pagar',
-      bankingFeatures: 'Características Bancarias',
       securityTitle: 'Seguridad de Nivel Bancario',
       securitySubtitle: 'Tu dinero y datos están protegidos con medidas de seguridad líderes en la industria',
       benefits: [
@@ -189,13 +180,6 @@ export class LandingComponent {
           title: 'Soporte 24/7',
           description: 'Obtén ayuda cuando la necesites con nuestro soporte al cliente las 24 horas.'
         }
-      ],
-      demoFeatures: [
-        { icon: '💰', title: 'Cuentas' },
-        { icon: '🔄', title: 'Transferencias' },
-        { icon: '💳', title: 'Pagos' },
-        { icon: '📄', title: 'Estados' },
-        { icon: '💎', title: 'Tarjetas' }
       ]
     },
     French: {
@@ -210,7 +194,6 @@ export class LandingComponent {
       send: 'Envoyer',
       receive: 'Recevoir',
       pay: 'Payer',
-      bankingFeatures: 'Fonctionnalités Bancaires',
       securityTitle: 'Sécurité de Niveau Bancaire',
       securitySubtitle: 'Votre argent et vos données sont protégés par des mesures de sécurité de pointe',
       benefits: [
@@ -281,13 +264,6 @@ export class LandingComponent {
           title: 'Support 24/7',
           description: 'Obtenez de l\'aide quand vous en avez besoin avec notre support client 24h/24.'
         }
-      ],
-      demoFeatures: [
-        { icon: '💰', title: 'Comptes' },
-        { icon: '🔄', title: 'Transferts' },
-        { icon: '💳', title: 'Paiements' },
-        { icon: '📄', title: 'Relevés' },
-        { icon: '💎', title: 'Cartes' }
       ]
     },
     German: {
@@ -302,7 +278,6 @@ export class LandingComponent {
       send: 'Senden',
       receive: 'Empfangen',
       pay: 'Bezahlen',
-      bankingFeatures: 'Banking-Funktionen',
       securityTitle: 'Banken-Level Sicherheit',
       securitySubtitle: 'Ihr Geld und Ihre Daten sind durch branchenführende Sicherheitsmaßnahmen geschützt',
       benefits: [
@@ -373,13 +348,6 @@ export class LandingComponent {
           title: '24/7 Support',
           description: 'Erhalten Sie Hilfe, wann immer Sie sie brauchen, mit unserem rund um die Uhr verfügbaren Kundensupport.'
         }
-      ],
-      demoFeatures: [
-        { icon: '💰', title: 'Konten' },
-        { icon: '🔄', title: 'Überweisungen' },
-        { icon: '💳', title: 'Zahlungen' },
-        { icon: '📄', title: 'Auszüge' },
-        { icon: '💎', title: 'Karten' }
       ]
     }
   };
@@ -390,10 +358,6 @@ export class LandingComponent {
 
   get features() {
     return this.currentTranslation.features;
-  }
-
-  get demoFeatures() {
-    return this.currentTranslation.demoFeatures;
   }
 
   changeLanguage(language: string) {
