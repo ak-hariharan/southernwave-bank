@@ -40,7 +40,7 @@
         <h1 class="bank-name">{{currentTranslation.bankName}}</h1>
         <p class="tagline">{{currentTranslation.tagline}}</p>
         <div class="hero-buttons">
-          <shared-button class="btn-primary">{{currentTranslation.login}}</shared-button>
+          <shared-button class="btn-primary" (click)="openLogin()">{{currentTranslation.login}}</shared-button>
           <shared-button class="btn-secondary">{{currentTranslation.openAccount}}</shared-button>
         </div>
       </div>
@@ -171,10 +171,13 @@
     <div class="container">
       <h2>{{currentTranslation.finalCtaTitle}}</h2>
       <p>{{currentTranslation.finalCtaSubtitle}}</p>
-      <shared-button class="btn-primary">{{currentTranslation.getStarted}}</shared-button>
+      <shared-button class="btn-primary" (click)="openLogin()">{{currentTranslation.getStarted}}</shared-button>
     </div>
   </section>
 
   <!-- Footer -->
   <shared-footer [translation]="currentTranslation"></shared-footer>
 </div>
+
+<!-- Login Modal -->
+<app-login-modal [isVisible]="showLoginModal" (close)="showLoginModal = false"></app-login-modal>
