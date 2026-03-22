@@ -8,3 +8,4 @@ export * from './lib/ui/shared-button/shared-button';
 export * from './lib/ui/shared-footer/shared-footer';
 export * from './lib/models/auth.models';
 export * from './lib/services/auth.service';
+export * from './lib/interceptors/auth.interceptor';

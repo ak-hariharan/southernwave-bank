@@ -12,16 +12,20 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;
   z-index: vars.$z-index-overlay;
-  padding: vars.$spacing-md;
+  padding: vars.$spacing-xl;
   animation: overlayFadeIn vars.$animation-duration-fast ease-out;
 }
 
 @keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 // Modal Card
@@ -33,14 +37,22 @@
   padding: vars.$spacing-3xl vars.$spacing-2xl;
   width: 100%;
   max-width: 440px;
+  margin: auto; // This magically vertical-centers while preventing top viewport clipping
   box-shadow: vars.$shadow-xl, 0 0 40px rgba(212, 175, 55, 0.08);
   animation: cardSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   z-index: vars.$z-index-modal;
 }
 
 @keyframes cardSlideUp {
-  from { opacity: 0; transform: translateY(30px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 // Close Button
@@ -61,7 +73,10 @@
   transition: vars.$transition-all;
   padding: 0;
 
-  svg { width: 16px; height: 16px; }
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 
   &:hover {
     background: vars.$color-overlay-medium;
@@ -85,8 +100,15 @@
 }
 
 @keyframes logoBounce {
-  from { transform: scale(0.5); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .modal-title {
@@ -142,7 +164,10 @@
   align-items: center;
   pointer-events: none;
 
-  svg { width: 18px; height: 18px; }
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .form-input {
@@ -188,9 +213,14 @@
   padding: 0;
   transition: vars.$transition-color;
 
-  svg { width: 18px; height: 18px; }
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 
-  &:hover { color: vars.$color-primary; }
+  &:hover {
+    color: vars.$color-primary;
+  }
 }
 
 .error-msg {
@@ -214,12 +244,23 @@
   font-size: vars.$font-size-sm;
   animation: fadeIn vars.$animation-duration-fast ease;
 
-  svg { width: 18px; height: 18px; flex-shrink: 0; }
+  svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Submit Button
@@ -274,7 +315,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 // Footer

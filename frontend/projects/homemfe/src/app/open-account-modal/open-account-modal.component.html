@@ -1,0 +1,44 @@
+<div class="modal-overlay" *ngIf="isVisible" (click)="onClose()">
+    <div class="modal-content glass-effect" (click)="$event.stopPropagation()">
+
+        <button class="close-btn" (click)="onClose()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="modal-header">
+            <div class="modal-icon">🏦</div>
+            <h2 class="modal-title">{{translation?.modals?.openAccountTitle || 'Open an Account'}}</h2>
+            <p class="modal-subtitle">{{translation?.modals?.openAccountWelcome || 'Welcome to SouthernWave Bank!'}}</p>
+        </div>
+
+        <div class="modal-body">
+            <div class="info-card">
+                <div class="info-icon">📍</div>
+                <div class="info-text">
+                    <h3>{{translation?.modals?.inBranchExclusivity || 'In-Branch Exclusivity'}}</h3>
+                    <p>{{translation?.modals?.inBranchDesc || 'To ensure the highest level of security and personalized
+                        service, SouthernWave Bank currently opens new accounts exclusively at our physical branch
+                        locations.'}}</p>
+                </div>
+            </div>
+
+            <div class="branch-details">
+                <h4>{{translation?.modals?.visitBranch || 'Visit Our Flagship Branch'}}</h4>
+                <p><strong>{{translation?.modals?.hqAddressPart1 || 'SouthernWave Corporate Center'}}</strong><br>
+                    {{translation?.modals?.hqAddressPart2 || '123 Financial District, Suite 500'}}<br>
+                    {{translation?.modals?.hqAddressPart3 || 'New York, NY 10004'}}</p>
+                <p>{{translation?.modals?.hqHours || 'Hours: Mon - Fri, 9:00 AM - 5:00 PM'}}</p>
+                <p>{{translation?.modals?.hqContact || 'Contact: 1-800-555-WAVE'}}</p>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-primary" (click)="onClose()">{{translation?.modals?.gotItThanks || 'Got it,
+                thanks!'}}</button>
+        </div>
+
+    </div>
+</div>

@@ -136,7 +136,7 @@
 
 .hero-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); // Fixes horizontal viewport blowouts
   gap: shared.$spacing-4xl;
   align-items: center;
   width: 100%;
@@ -159,6 +159,8 @@
   font-weight: shared.$font-weight-extrabold;
   line-height: shared.$line-height-tight;
   margin-bottom: shared.$spacing-md;
+  word-wrap: break-word;
+  overflow-wrap: break-word; // Ensures huge fonts break before pushing grid
   @include shared.slide-in-up(0.2s);
 }
 
@@ -196,6 +198,8 @@
 .phone-mockup {
   width: 280px;
   height: 560px;
+  max-width: 100%; // Make it responsive
+  box-sizing: border-box;
   background: #000;
   border-radius: shared.$radius-4xl;
   padding: shared.$spacing-lg;

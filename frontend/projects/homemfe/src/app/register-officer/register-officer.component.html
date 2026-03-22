@@ -1,0 +1,102 @@
+<div class="register-page">
+    <div class="register-card">
+
+        <div class="register-header">
+            <div class="register-logo" (click)="goToHome()">🏦</div>
+            <h2 class="register-title">Officer Registration</h2>
+            <p class="register-subtitle">Create a new internal officer account</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate class="register-form">
+
+            <div class="form-row">
+                <!-- First Name -->
+                <div class="form-group"
+                    [class.has-error]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input id="firstName" type="text" class="form-input" formControlName="firstName"
+                        placeholder="John" />
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group"
+                    [class.has-error]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input id="lastName" type="text" class="form-input" formControlName="lastName"
+                        placeholder="Smith" />
+                </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group"
+                [class.has-error]="registerForm.get('emailId')?.invalid && registerForm.get('emailId')?.touched">
+                <label class="form-label" for="emailId">Email Address</label>
+                <input id="emailId" type="email" class="form-input" formControlName="emailId"
+                    placeholder="officer@southernwavebank.com" autocomplete="email" />
+                <span class="error-msg"
+                    *ngIf="registerForm.get('emailId')?.touched && registerForm.get('emailId')?.hasError('email')">
+                    Please enter a valid email address.
+                </span>
+            </div>
+
+            <!-- Contact Number -->
+            <div class="form-group"
+                [class.has-error]="registerForm.get('contactNumber')?.invalid && registerForm.get('contactNumber')?.touched">
+                <label class="form-label" for="contactNumber">Contact Number</label>
+                <input id="contactNumber" type="tel" class="form-input" formControlName="contactNumber"
+                    placeholder="1234567890" maxlength="10" />
+                <span class="error-msg"
+                    *ngIf="registerForm.get('contactNumber')?.touched && registerForm.get('contactNumber')?.hasError('pattern')">
+                    Must be exactly 10 digits.
+                </span>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group"
+                [class.has-error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-wrapper">
+                    <input id="password" [type]="showPassword ? 'text' : 'password'" class="form-input"
+                        formControlName="password" placeholder="Create a secure password" autocomplete="new-password" />
+                    <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+                        <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                            <line x1="1" y1="1" x2="23" y2="23" />
+                        </svg>
+                    </button>
+                </div>
+                <span class="error-msg"
+                    *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('minlength')">
+                    Password must be at least 6 characters.
+                </span>
+            </div>
+
+            <!-- Alerts -->
+            <div class="server-error" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+            <div class="server-success" *ngIf="successMessage">
+                {{ successMessage }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" [disabled]="isLoading">
+                <span *ngIf="!isLoading">Register Officer</span>
+                <span *ngIf="isLoading" class="spinner-wrapper"><span class="spinner"></span> Registering...</span>
+            </button>
+
+        </form>
+
+        <div class="register-footer">
+            <a href="javascript:void(0)" (click)="goToHome()" class="footer-link">Back to Home</a>
+        </div>
+
+    </div>
+</div>

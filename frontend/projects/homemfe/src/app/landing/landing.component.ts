@@ -2,17 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'shared';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
+import { OpenAccountModalComponent } from '../open-account-modal/open-account-modal.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, SharedModule, LoginModalComponent],
+  imports: [CommonModule, SharedModule, LoginModalComponent, OpenAccountModalComponent],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent {
 
   showLoginModal = false;
+  showAccountModal = false;
   selectedLanguage = 'English';
 
   translations = {
@@ -98,7 +100,41 @@ export class LandingComponent {
           title: '24/7 Support',
           description: 'Get help whenever you need it with our round-the-clock customer support.'
         }
-      ]
+      ],
+      modals: {
+        openAccountTitle: 'Open an Account',
+        openAccountWelcome: 'Welcome to SouthernWave Bank!',
+        inBranchExclusivity: 'In-Branch Exclusivity',
+        inBranchDesc: 'To ensure the highest level of security and personalized service, SouthernWave Bank currently opens new accounts exclusively at our physical branch locations.',
+        visitBranch: 'Visit Our Flagship Branch',
+        hqAddressPart1: 'SouthernWave Corporate Center',
+        hqAddressPart2: '123 Financial District, Suite 500',
+        hqAddressPart3: 'New York, NY 10004',
+        hqHours: 'Hours: Mon - Fri, 9:00 AM - 5:00 PM',
+        hqContact: 'Contact: 1-800-555-WAVE',
+        gotItThanks: 'Got it, thanks!',
+        welcomeBack: 'Welcome Back',
+        loginSubtitle: 'Secure access to your SouthernWave account',
+        emailLabel: 'Email Address',
+        passwordLabel: 'Password',
+        rememberMe: 'Remember me',
+        forgotPasswordLink: 'Forgot Password?',
+        loginBtn: 'Login',
+        loggingIn: 'Logging in...',
+        secureEncrypted: 'Secure encrypted connection',
+        resetPasswordTitle: 'Reset Password',
+        forgotPasswordSubtitle: 'Enter your details to receive an OTP',
+        fullNameLabel: 'Full Name',
+        sendOtpBtn: 'Send OTP',
+        sending: 'Sending...',
+        backToLogin: 'Back to Login',
+        enterOtpTitle: 'Enter OTP',
+        enterOtpSubtitle: "We've sent a code to your email",
+        otpLabel: '6-Digit OTP',
+        newPasswordLabel: 'New Password',
+        verifyResetBtn: 'Verify & Reset',
+        verifying: 'Verifying...'
+      }
     },
     Spanish: {
       aboutUs: 'Acerca de',
@@ -182,7 +218,41 @@ export class LandingComponent {
           title: 'Soporte 24/7',
           description: 'Obtén ayuda cuando la necesites con nuestro soporte al cliente las 24 horas.'
         }
-      ]
+      ],
+      modals: {
+        openAccountTitle: 'Abrir una Cuenta',
+        openAccountWelcome: '¡Bienvenido a SouthernWave Bank!',
+        inBranchExclusivity: 'Exclusividad en Sucursal',
+        inBranchDesc: 'Para garantizar el más alto nivel de seguridad y servicio personalizado, actualmente abrimos nuevas cuentas exclusivamente en nuestras sucursales físicas.',
+        visitBranch: 'Visite Nuestra Sucursal Principal',
+        hqAddressPart1: 'Centro Corporativo SouthernWave',
+        hqAddressPart2: '123 Financial District, Suite 500',
+        hqAddressPart3: 'Nueva York, NY 10004',
+        hqHours: 'Horario: Lun - Vie, 9:00 AM - 5:00 PM',
+        hqContact: 'Contacto: 1-800-555-WAVE',
+        gotItThanks: '¡Entendido, gracias!',
+        welcomeBack: 'Bienvenido de Nuevo',
+        loginSubtitle: 'Acceso seguro a su cuenta SouthernWave',
+        emailLabel: 'Correo Electrónico',
+        passwordLabel: 'Contraseña',
+        rememberMe: 'Recuérdame',
+        forgotPasswordLink: '¿Olvidó su Contraseña?',
+        loginBtn: 'Iniciar Sesión',
+        loggingIn: 'Iniciando sesión...',
+        secureEncrypted: 'Conexión cifrada segura',
+        resetPasswordTitle: 'Restablecer Contraseña',
+        forgotPasswordSubtitle: 'Ingrese sus datos para recibir un OTP',
+        fullNameLabel: 'Nombre Completo',
+        sendOtpBtn: 'Enviar OTP',
+        sending: 'Enviando...',
+        backToLogin: 'Volver a Iniciar Sesión',
+        enterOtpTitle: 'Ingrese OTP',
+        enterOtpSubtitle: 'Hemos enviado un código a su correo',
+        otpLabel: 'OTP de 6 dígitos',
+        newPasswordLabel: 'Nueva Contraseña',
+        verifyResetBtn: 'Verificar y Restablecer',
+        verifying: 'Verificando...'
+      }
     },
     French: {
       aboutUs: 'À Propos',
@@ -266,7 +336,41 @@ export class LandingComponent {
           title: 'Support 24/7',
           description: 'Obtenez de l\'aide quand vous en avez besoin avec notre support client 24h/24.'
         }
-      ]
+      ],
+      modals: {
+        openAccountTitle: 'Ouvrir un Compte',
+        openAccountWelcome: 'Bienvenue chez SouthernWave Bank!',
+        inBranchExclusivity: 'Exclusivité en Agence',
+        inBranchDesc: 'Pour garantir le plus haut niveau de sécurité et de service personnalisé, nous ouvrons actuellement de nouveaux comptes exclusivement dans nos agences.',
+        visitBranch: 'Visitez Notre Agence Principale',
+        hqAddressPart1: 'Centre Corporatif SouthernWave',
+        hqAddressPart2: '123 Financial District, Bureau 500',
+        hqAddressPart3: 'New York, NY 10004',
+        hqHours: 'Horaires: Lun - Ven, 9h00 - 17h00',
+        hqContact: 'Contact: 1-800-555-WAVE',
+        gotItThanks: 'C\'est compris, merci!',
+        welcomeBack: 'Bon Retour',
+        loginSubtitle: 'Accès sécurisé à votre compte SouthernWave',
+        emailLabel: 'Adresse E-mail',
+        passwordLabel: 'Mot de Passe',
+        rememberMe: 'Se souvenir de moi',
+        forgotPasswordLink: 'Mot de Passe Oublié ?',
+        loginBtn: 'Connexion',
+        loggingIn: 'Connexion en cours...',
+        secureEncrypted: 'Connexion sécurisée et cryptée',
+        resetPasswordTitle: 'Réinitialiser le Mot de Passe',
+        forgotPasswordSubtitle: 'Entrez vos coordonnées pour recevoir un OTP',
+        fullNameLabel: 'Nom Complet',
+        sendOtpBtn: 'Envoyer OTP',
+        sending: 'Envoi...',
+        backToLogin: 'Retour à la Connexion',
+        enterOtpTitle: 'Entrez l\'OTP',
+        enterOtpSubtitle: 'Nous avons envoyé un code par e-mail',
+        otpLabel: 'OTP à 6 chiffres',
+        newPasswordLabel: 'Nouveau Mot de Passe',
+        verifyResetBtn: 'Vérifier et Réinitialiser',
+        verifying: 'Vérification...'
+      }
     },
     German: {
       aboutUs: 'Über Uns',
@@ -350,7 +454,41 @@ export class LandingComponent {
           title: '24/7 Support',
           description: 'Erhalten Sie Hilfe, wann immer Sie sie brauchen, mit unserem rund um die Uhr verfügbaren Kundensupport.'
         }
-      ]
+      ],
+      modals: {
+        openAccountTitle: 'Konto eröffnen',
+        openAccountWelcome: 'Willkommen bei SouthernWave Bank!',
+        inBranchExclusivity: 'Exklusiv in der Filiale',
+        inBranchDesc: 'Um ein Höchstmaß an Sicherheit und persönlichem Service zu gewährleisten, eröffnen wir neue Konten derzeit ausschließlich in unseren physischen Filialen.',
+        visitBranch: 'Besuchen Sie unsere Hauptfiliale',
+        hqAddressPart1: 'SouthernWave Unternehmenszentrum',
+        hqAddressPart2: '123 Financial District, Suite 500',
+        hqAddressPart3: 'New York, NY 10004',
+        hqHours: 'Öffnungszeiten: Mo - Fr, 9:00 - 17:00 Uhr',
+        hqContact: 'Kontakt: 1-800-555-WAVE',
+        gotItThanks: 'Verstanden, danke!',
+        welcomeBack: 'Willkommen zurück',
+        loginSubtitle: 'Sicherer Zugriff auf Ihr SouthernWave-Konto',
+        emailLabel: 'E-Mail-Adresse',
+        passwordLabel: 'Passwort',
+        rememberMe: 'Angemeldet bleiben',
+        forgotPasswordLink: 'Passwort vergessen?',
+        loginBtn: 'Anmelden',
+        loggingIn: 'Anmelden...',
+        secureEncrypted: 'Sichere verschlüsselte Verbindung',
+        resetPasswordTitle: 'Passwort zurücksetzen',
+        forgotPasswordSubtitle: 'Geben Sie Ihre Daten ein für das OTP',
+        fullNameLabel: 'Vollständiger Name',
+        sendOtpBtn: 'OTP senden',
+        sending: 'Senden...',
+        backToLogin: 'Zurück zur Anmeldung',
+        enterOtpTitle: 'OTP eingeben',
+        enterOtpSubtitle: 'Wir haben einen Code an Ihre E-Mail gesendet',
+        otpLabel: '6-stellige OTP',
+        newPasswordLabel: 'Neues Passwort',
+        verifyResetBtn: 'Überprüfen & Zurücksetzen',
+        verifying: 'Überprüfen...'
+      }
     }
   };
 
@@ -379,5 +517,9 @@ export class LandingComponent {
 
   openLogin(): void {
     this.showLoginModal = true;
+  }
+
+  openAccountInfo(): void {
+    this.showAccountModal = true;
   }
 }

@@ -41,7 +41,8 @@
         <p class="tagline">{{currentTranslation.tagline}}</p>
         <div class="hero-buttons">
           <shared-button class="btn-primary" (click)="openLogin()">{{currentTranslation.login}}</shared-button>
-          <shared-button class="btn-secondary">{{currentTranslation.openAccount}}</shared-button>
+          <shared-button class="btn-secondary"
+            (click)="openAccountInfo()">{{currentTranslation.openAccount}}</shared-button>
         </div>
       </div>
       <div class="hero-visual">
@@ -180,4 +181,9 @@
 </div>
 
 <!-- Login Modal -->
-<app-login-modal [isVisible]="showLoginModal" (close)="showLoginModal = false"></app-login-modal>
+<app-login-modal [isVisible]="showLoginModal" [translation]="currentTranslation"
+  (close)="showLoginModal = false"></app-login-modal>
+
+<!-- Open Account Modal -->
+<app-open-account-modal [isVisible]="showAccountModal" [translation]="currentTranslation"
+  (close)="showAccountModal = false"></app-open-account-modal>

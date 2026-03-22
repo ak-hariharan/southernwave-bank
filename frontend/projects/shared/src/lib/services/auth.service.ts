@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { LoginRequest, AuthResponse, TOKEN_KEYS } from '../models/auth.models';
+import { LoginRequest, AuthResponse, TOKEN_KEYS, ForgetPasswordRequest, ResetPasswordRequest, ApiResponse, TokenRefreshRequest, RegisterRequest } from '../models/auth.models';
 
 /** Base URL for the API gateway — update this to match your gateway port */
 const API_BASE = 'http://localhost:8070';
@@ -29,6 +29,28 @@ export class AuthService {
         return this.http
             .post<AuthResponse>(`${API_BASE}/swb/auth/login`, req)
             .pipe(tap(res => this.saveTokens(res.accessToken, res.refreshToken)));
+    }
+
+    /** Trigger forgot password flow and get OTP via email */
+    forgetPassword(req: ForgetPasswordRequest): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(`${API_BASE}/swb/auth/forget-password`, req);
+    }
+
+    /** Reset password using the received OTP */
+    resetPassword(emailId: string, req: ResetPasswordRequest): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(`${API_BASE}/swb/auth/reset-password/${emailId}`, req);
+    }
+
+    /** Refresh Access Token */
+    refreshToken(req: TokenRefreshRequest): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(`${API_BASE}/swb/auth/refresh`, req).pipe(
+            tap(res => this.saveTokens(res.accessToken, res.refreshToken))
+        );
+    }
+
+    /** Register a generic user (Officer/Consumer) */
+    registerUser(req: RegisterRequest): Observable<ApiResponse> {
+        return this.http.post<ApiResponse>(`${API_BASE}/swb/auth/register`, req);
     }
 
     // --------------------------------------------------------------------------

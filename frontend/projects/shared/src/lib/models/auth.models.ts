@@ -22,8 +22,22 @@ export interface ForgetPasswordRequest {
 
 /** Sent to POST /swb/auth/reset-password/{email} */
 export interface ResetPasswordRequest {
-    otp: string;
-    newPassword: string;
+    otp: number;
+    password: string;
+}
+
+/** Sent to POST /swb/auth/refresh */
+export interface TokenRefreshRequest {
+    refreshToken: string;
+}
+
+/** Sent to POST /swb/auth/register */
+export interface RegisterRequest {
+    name: string;
+    emailId: string;
+    password: string;
+    role: 'CONSUMER' | 'OFFICER';
+    contactNumber?: string;
 }
 
 /** Generic wrapper matching backend Response<T> shape */

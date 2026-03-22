@@ -1,105 +1,276 @@
 <div class="modal-overlay" *ngIf="isVisible" (click)="onOverlayClick($event)" role="dialog" aria-modal="true"
-  aria-labelledby="login-title">
+  aria-labelledby="modal-title">
 
   <div class="modal-card">
 
     <!-- Close Button -->
-    <button class="modal-close" (click)="closeModal()" aria-label="Close login modal">
+    <button class="modal-close" (click)="closeModal()" aria-label="Close modal">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
     </button>
 
-    <!-- Header -->
-    <div class="modal-header">
-      <div class="modal-logo">🏦</div>
-      <h2 id="login-title" class="modal-title">Welcome Back</h2>
-      <p class="modal-subtitle">Sign in to SouthernWave Bank</p>
-    </div>
+    <!-- ========================================================= -->
+    <!-- VIEW 1: LOGIN -->
+    <!-- ========================================================= -->
+    <ng-container *ngIf="currentView === 'login'">
+      <div class="modal-header">
+        <div class="modal-logo">🏦</div>
+        <h2 id="modal-title" class="modal-title">{{translation?.modals?.welcomeBack || 'Welcome Back'}}</h2>
+        <p class="modal-subtitle">{{translation?.modals?.loginSubtitle || 'Sign in to SouthernWave Bank'}}</p>
+      </div>
 
-    <!-- Login Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" novalidate class="login-form">
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" novalidate class="login-form">
 
-      <!-- Email Field -->
-      <div class="form-group" [class.has-error]="emailCtrl.invalid && emailCtrl.touched">
-        <label class="form-label" for="emailId">Email Address</label>
-        <div class="input-wrapper">
-          <span class="input-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
+        <!-- Email Field -->
+        <div class="form-group" [class.has-error]="emailCtrl.invalid && emailCtrl.touched">
+          <label class="form-label" for="emailId">{{translation?.modals?.emailLabel || 'Email Address'}}</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <!-- SVG icon from earlier -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </span>
+            <input id="emailId" type="email" class="form-input" formControlName="emailId"
+              placeholder="officer@southernwavebank.com" autocomplete="email" />
+          </div>
+          <span class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.hasError('required')">
+            Email is required.
           </span>
-          <input id="emailId" type="email" class="form-input" formControlName="emailId"
-            placeholder="officer@southernwavebank.com" autocomplete="email" />
-        </div>
-        <span class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.hasError('required')">
-          Email is required.
-        </span>
-        <span class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.hasError('email')">
-          Please enter a valid email address.
-        </span>
-      </div>
-
-      <!-- Password Field -->
-      <div class="form-group" [class.has-error]="passwordCtrl.invalid && passwordCtrl.touched">
-        <label class="form-label" for="password">Password</label>
-        <div class="input-wrapper">
-          <span class="input-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
+          <span class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.hasError('email')">
+            Please enter a valid email address.
           </span>
-          <input id="password" [type]="showPassword ? 'text' : 'password'" class="form-input" formControlName="password"
-            placeholder="Enter your password" autocomplete="current-password" />
-          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"
-            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
-            <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-            <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-              <line x1="1" y1="1" x2="23" y2="23" />
-            </svg>
-          </button>
         </div>
-        <span class="error-msg" *ngIf="passwordCtrl.touched && passwordCtrl.hasError('required')">
-          Password is required.
-        </span>
-        <span class="error-msg" *ngIf="passwordCtrl.touched && passwordCtrl.hasError('minlength')">
-          Password must be at least 6 characters.
-        </span>
+
+        <!-- Password Field -->
+        <div class="form-group" [class.has-error]="passwordCtrl.invalid && passwordCtrl.touched">
+          <label class="form-label" for="password">{{translation?.modals?.passwordLabel || 'Password'}}</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <!-- SVG icon and toggles from earlier -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </span>
+            <input id="password" [type]="showPassword ? 'text' : 'password'" class="form-input"
+              formControlName="password" placeholder="Enter your password" autocomplete="current-password" />
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility()"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+              <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+          </div>
+          <span class="error-msg" *ngIf="passwordCtrl.touched && passwordCtrl.hasError('required')">
+            Password is required.
+          </span>
+          <span class="error-msg" *ngIf="passwordCtrl.touched && passwordCtrl.hasError('minlength')">
+            Password must be at least 6 characters.
+          </span>
+        </div>
+
+        <div class="server-error" *ngIf="errorMessage" role="alert">
+          <!-- icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          <span *ngIf="!isLoading">{{translation?.modals?.loginBtn || 'Sign In'}}</span>
+          <span *ngIf="isLoading" class="spinner-wrapper">
+            <span class="spinner"></span> {{translation?.modals?.loggingIn || 'Signing in...'}}
+          </span>
+        </button>
+
+      </form>
+
+      <div class="modal-footer">
+        <a href="#" class="footer-link"
+          (click)="$event.preventDefault(); goToForgotPass()">{{translation?.modals?.forgotPasswordLink || 'Forgot
+          Password?'}}</a>
+      </div>
+    </ng-container>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 2: FORGOT PASSWORD (STEP 1) -->
+    <!-- ========================================================= -->
+    <ng-container *ngIf="currentView === 'forgot-pass-step1'">
+      <div class="modal-header">
+        <div class="modal-logo">🔒</div>
+        <h2 id="modal-title" class="modal-title">{{translation?.modals?.resetPasswordTitle || 'Reset Password'}}</h2>
+        <p class="modal-subtitle">{{translation?.modals?.forgotPasswordSubtitle || 'Enter your name and email to receive
+          an OTP'}}</p>
       </div>
 
-      <!-- Server Error -->
-      <div class="server-error" *ngIf="errorMessage" role="alert">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="8" x2="12" y2="12" />
-          <line x1="12" y1="16" x2="12.01" y2="16" />
-        </svg>
-        {{ errorMessage }}
+      <form [formGroup]="forgotPassForm" (ngSubmit)="onForgotPassSubmit()" novalidate class="login-form">
+
+        <!-- Name Field -->
+        <div class="form-group" [class.has-error]="fpNameCtrl.invalid && fpNameCtrl.touched">
+          <label class="form-label" for="fpName">{{translation?.modals?.fullNameLabel || 'Full Name'}}</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </span>
+            <input id="fpName" type="text" class="form-input" formControlName="name" placeholder="John Doe"
+              autocomplete="name" />
+          </div>
+          <span class="error-msg" *ngIf="fpNameCtrl.touched && fpNameCtrl.hasError('required')">
+            Name is required.
+          </span>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group" [class.has-error]="fpEmailCtrl.invalid && fpEmailCtrl.touched">
+          <label class="form-label" for="fpEmail">{{translation?.modals?.emailLabel || 'Email Address'}}</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </span>
+            <input id="fpEmail" type="email" class="form-input" formControlName="emailId" placeholder="john@example.com"
+              autocomplete="email" />
+          </div>
+          <span class="error-msg" *ngIf="fpEmailCtrl.touched && fpEmailCtrl.hasError('required')">
+            Email is required.
+          </span>
+          <span class="error-msg" *ngIf="fpEmailCtrl.touched && fpEmailCtrl.hasError('email')">
+            Please enter a valid email address.
+          </span>
+        </div>
+
+        <div class="server-error" *ngIf="errorMessage" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          <span *ngIf="!isLoading">{{translation?.modals?.sendOtpBtn || 'Send OTP'}}</span>
+          <span *ngIf="isLoading" class="spinner-wrapper">
+            <span class="spinner"></span> {{translation?.modals?.sending || 'Sending...'}}
+          </span>
+        </button>
+
+      </form>
+
+      <div class="modal-footer">
+        <a href="#" class="footer-link"
+          (click)="$event.preventDefault(); goToLogin()">{{translation?.modals?.backToLogin || 'Back to Login'}}</a>
+      </div>
+    </ng-container>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 3: RESET PASSWORD (STEP 2) -->
+    <!-- ========================================================= -->
+    <ng-container *ngIf="currentView === 'forgot-pass-step2'">
+      <div class="modal-header">
+        <div class="modal-logo">🔑</div>
+        <h2 id="modal-title" class="modal-title">{{translation?.modals?.enterOtpTitle || 'Enter OTP'}}</h2>
+        <p class="modal-subtitle">{{translation?.modals?.enterOtpSubtitle || 'We sent a code to'}} {{pendingEmail}}</p>
       </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="submit-btn" [disabled]="isLoading" id="login-submit-btn">
-        <span *ngIf="!isLoading">Sign In</span>
-        <span *ngIf="isLoading" class="spinner-wrapper">
-          <span class="spinner"></span>
-          Signing in...
-        </span>
-      </button>
+      <form [formGroup]="resetPassForm" (ngSubmit)="onResetPassSubmit()" novalidate class="login-form">
 
-    </form>
+        <!-- OTP Field -->
+        <div class="form-group" [class.has-error]="rpOtpCtrl.invalid && rpOtpCtrl.touched">
+          <label class="form-label" for="rpOtp">{{translation?.modals?.otpLabel || '6-Digit OTP'}}</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <!-- Shield Check icon for OTP -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+            </span>
+            <input id="rpOtp" type="text" class="form-input" formControlName="otp" placeholder="123456" maxlength="6"
+              inputmode="numeric" />
+          </div>
+          <span class="error-msg" *ngIf="rpOtpCtrl.touched && rpOtpCtrl.hasError('required')">
+            OTP is required.
+          </span>
+          <span class="error-msg" *ngIf="rpOtpCtrl.touched && rpOtpCtrl.hasError('pattern')">
+            OTP must be a 6-digit number.
+          </span>
+        </div>
 
-    <!-- Footer Links -->
-    <div class="modal-footer">
-      <a href="#" class="footer-link" (click)="$event.preventDefault()">Forgot Password?</a>
-    </div>
+        <!-- New Password Field -->
+        <div class="form-group" [class.has-error]="rpPasswordCtrl.invalid && rpPasswordCtrl.touched">
+          <label class="form-label" for="rpPassword">{{translation?.modals?.newPasswordLabel || 'New Password'}}</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </span>
+            <input id="rpPassword" [type]="showPassword ? 'text' : 'password'" class="form-input"
+              formControlName="password" placeholder="Enter new password" autocomplete="new-password" />
+            <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+              <svg *ngIf="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <svg *ngIf="showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                <line x1="1" y1="1" x2="23" y2="23" />
+              </svg>
+            </button>
+          </div>
+          <span class="error-msg" *ngIf="rpPasswordCtrl.touched && rpPasswordCtrl.hasError('required')">
+            New password is required.
+          </span>
+          <span class="error-msg" *ngIf="rpPasswordCtrl.touched && rpPasswordCtrl.hasError('minlength')">
+            Password must be at least 6 characters.
+          </span>
+        </div>
+
+        <div class="server-error" *ngIf="errorMessage" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          <span *ngIf="!isLoading">{{translation?.modals?.verifyResetBtn || 'Verify & Reset'}}</span>
+          <span *ngIf="isLoading" class="spinner-wrapper">
+            <span class="spinner"></span> {{translation?.modals?.verifying || 'Verifying...'}}
+          </span>
+        </button>
+
+      </form>
+
+      <div class="modal-footer">
+        <a href="#" class="footer-link"
+          (click)="$event.preventDefault(); goToLogin()">{{translation?.modals?.backToLogin || 'Cancel & Back to
+          Login'}}</a>
+      </div>
+    </ng-container>
 
   </div>
 </div>
