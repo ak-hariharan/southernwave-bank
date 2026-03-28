@@ -17,7 +17,6 @@ export class RegisterOfficerComponent implements OnInit {
     isLoading = false;
     errorMessage = '';
     successMessage = '';
-    showPassword = false;
 
     constructor(
         private fb: FormBuilder,
@@ -30,13 +29,8 @@ export class RegisterOfficerComponent implements OnInit {
             firstName: ['', [Validators.required]],
             lastName: ['', [Validators.required]],
             emailId: ['', [Validators.required, Validators.email]],
-            contactNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            contactNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
         });
-    }
-
-    togglePasswordVisibility(): void {
-        this.showPassword = !this.showPassword;
     }
 
     onSubmit(): void {
@@ -55,7 +49,7 @@ export class RegisterOfficerComponent implements OnInit {
         const req: RegisterRequest = {
             name: fullName,
             emailId: formVals.emailId.trim(),
-            password: formVals.password,
+            password: '', // Passed as empty string since backend handles dummy generation internally
             role: 'OFFICER',
             contactNumber: formVals.contactNumber
         };

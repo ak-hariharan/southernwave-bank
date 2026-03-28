@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'shared';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { OpenAccountModalComponent } from '../open-account-modal/open-account-modal.component';
 
@@ -11,11 +13,32 @@ import { OpenAccountModalComponent } from '../open-account-modal/open-account-mo
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit, OnDestroy {
 
   showLoginModal = false;
+  loginModalInitialView: 'login' | 'forgot-pass-step1' | 'forgot-pass-step2' = 'login';
   showAccountModal = false;
   selectedLanguage = 'English';
+  private querySub!: Subscription;
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit() {
+    this.querySub = this.route.queryParams.subscribe(params => {
+      if (params['reset'] === 'true') {
+        this.loginModalInitialView = 'forgot-pass-step1';
+        this.showLoginModal = true;
+        // Clean up URL so it doesn't reopen if they refresh after closing
+        this.router.navigate([], { queryParams: { reset: null }, queryParamsHandling: 'merge' });
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.querySub) {
+      this.querySub.unsubscribe();
+    }
+  }
 
   translations = {
     English: {
@@ -516,6 +539,7 @@ export class LandingComponent {
   }
 
   openLogin(): void {
+    this.loginModalInitialView = 'login';
     this.showLoginModal = true;
   }
 

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService, LoginRequest, ForgetPasswordRequest, ResetPasswordRequest } from 'shared';
@@ -12,10 +12,11 @@ type ModalView = 'login' | 'forgot-pass-step1' | 'forgot-pass-step2';
     templateUrl: './login-modal.component.html',
     styleUrls: ['./login-modal.component.scss']
 })
-export class LoginModalComponent implements OnInit, OnDestroy {
+export class LoginModalComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() isVisible = false;
     @Input() translation: any;
+    @Input() initialView: ModalView = 'login';
     @Output() close = new EventEmitter<void>();
 
     loginForm!: FormGroup;
@@ -40,6 +41,16 @@ export class LoginModalComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         document.removeEventListener('keydown', this.onEscKey);
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['initialView'] && changes['initialView'].currentValue) {
+            this.currentView = changes['initialView'].currentValue;
+        }
+        if (changes['isVisible'] && !changes['isVisible'].currentValue) {
+            // Reset view when closing
+            this.currentView = 'login'; 
+        }
     }
 
     private buildForms(): void {
@@ -185,7 +196,7 @@ export class LoginModalComponent implements OnInit, OnDestroy {
         this.loginForm.reset();
         this.forgotPassForm.reset();
         this.resetPassForm.reset();
-        this.currentView = 'login';
+        this.currentView = this.initialView;
         this.pendingEmail = '';
         this.close.emit();
     }
