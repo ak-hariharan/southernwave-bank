@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 import { LoginRequest, AuthResponse, TOKEN_KEYS, ForgetPasswordRequest, ResetPasswordRequest, ApiResponse, TokenRefreshRequest, RegisterRequest } from '../models/auth.models';
 
 /** Base URL for the API gateway — update this to match your gateway port */
-const API_BASE = 'http://localhost:8070';
+const API_BASE = 'http://localhost:8765';
 
 // ============================================================================
 // AuthService — Handles login, token storage and token utilities
@@ -48,9 +48,9 @@ export class AuthService {
         );
     }
 
-    /** Register a generic user (Officer/Consumer) */
+    /** Register a generic user (Officer/Consumer) via User Service */
     registerUser(req: RegisterRequest): Observable<ApiResponse> {
-        return this.http.post<ApiResponse>(`${API_BASE}/swb/auth/register`, req);
+        return this.http.post<ApiResponse>(`${API_BASE}/swb/users/register`, req);
     }
 
     // --------------------------------------------------------------------------
