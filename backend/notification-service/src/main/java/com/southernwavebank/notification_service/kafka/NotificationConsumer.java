@@ -131,6 +131,16 @@ public class NotificationConsumer {
         processNotification(notificationDto, "USER_CREATED");
     }
 
+    // Officer created events
+    @KafkaListener(
+            topics = "officer-created",
+            groupId = "notification-group",
+            containerFactory = "kafkaListenerContainerFactory"
+    )
+    public void consumeOfficerCreation(@Payload NotificationDto notificationDto) {
+        processNotification(notificationDto, "OFFICER_CREATED");
+    }
+
     // Account Creation Events
     @KafkaListener(
             topics = "account-created",

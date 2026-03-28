@@ -1,5 +1,5 @@
 package com.southernwavebank.user_service.model;
 
 public enum Role {
-	OFFICER, CONSUMER
+	OFFICER, CONSUMER, SUPER_OFFICER
 }

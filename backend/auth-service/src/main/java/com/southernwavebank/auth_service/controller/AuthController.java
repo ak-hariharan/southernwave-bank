@@ -7,7 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.southernwavebank.auth_service.model.dto.*;
+import com.southernwavebank.auth_service.model.dto.LoginRequest;
+import com.southernwavebank.auth_service.model.dto.LogoutRequest;
+import com.southernwavebank.auth_service.model.dto.AuthResponse;
+import com.southernwavebank.auth_service.model.dto.TokenRefreshRequest;
+import com.southernwavebank.auth_service.model.dto.ForgetPasswordRequest;
+import com.southernwavebank.auth_service.model.dto.ResetPasswordRequest;
 import com.southernwavebank.auth_service.reponse.Response;
 import com.southernwavebank.auth_service.service.AuthService;
 
@@ -28,16 +33,6 @@ public class AuthController {
 	@Autowired
 	public AuthController(AuthService authService) {
 		this.authService = authService;
-	}
-
-	// Register endpoint: accepts RegisterRequest and returns service response.
-	// Validates input and forwards to AuthService.registerUser.
-	@PostMapping("/register")
-	public ResponseEntity<Response> register(@Validated @RequestBody RegisterRequest registerRequest) {
-		log.info("New user registeration request received");
-		ResponseEntity<Response> response = authService.registerUser(registerRequest);
-		log.info("User registration request completed");
-		return response;
 	}
 
 	// Login endpoint: accepts credentials and returns AuthResponse with tokens.

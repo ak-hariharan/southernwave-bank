@@ -4,12 +4,10 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.ResponseEntity;
 
-import com.southernwavebank.auth_service.model.*;
 import com.southernwavebank.auth_service.model.dto.AuthResponse;
 import com.southernwavebank.auth_service.model.dto.ForgetPasswordRequest;
 import com.southernwavebank.auth_service.model.dto.LoginRequest;
 import com.southernwavebank.auth_service.model.dto.LogoutRequest;
-import com.southernwavebank.auth_service.model.dto.RegisterRequest;
 import com.southernwavebank.auth_service.model.dto.ResetPasswordRequest;
 import com.southernwavebank.auth_service.model.dto.TokenRefreshRequest;
 import com.southernwavebank.auth_service.reponse.Response;
@@ -19,13 +17,6 @@ import com.southernwavebank.auth_service.reponse.Response;
  * Implementations are expected to call user-service, manage tokens and interact with Redis/Kafka as needed.
  */
 public interface AuthService {
-
-	/**
-	 * Register a new user and generate initial JWT tokens.
-	 * @returns ResponseEntity<Response> containing tokens on success.
-	 * @throws RuntimeException when user-service registration fails or returns invalid data.
-	 */
-	 public ResponseEntity<Response> registerUser(RegisterRequest registerRequest);
 
 	/**
 	 * Authenticate user credentials and return access & refresh tokens.

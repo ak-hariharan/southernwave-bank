@@ -15,7 +15,12 @@ import org.springframework.web.reactive.function.client.WebClient.Builder;
 import com.southernwavebank.auth_service.exception.UnAuthorizedUserException;
 import com.southernwavebank.auth_service.jwt.JWTService;
 import com.southernwavebank.auth_service.kafka.OtpNotificationEventProducer;
-import com.southernwavebank.auth_service.model.dto.*;
+import com.southernwavebank.auth_service.model.dto.AuthResponse;
+import com.southernwavebank.auth_service.model.dto.ForgetPasswordRequest;
+import com.southernwavebank.auth_service.model.dto.LoginRequest;
+import com.southernwavebank.auth_service.model.dto.LogoutRequest;
+import com.southernwavebank.auth_service.model.dto.ResetPasswordRequest;
+import com.southernwavebank.auth_service.model.dto.TokenRefreshRequest;
 import com.southernwavebank.auth_service.model.entity.UserTokenInfo;
 import com.southernwavebank.auth_service.model.externaldto.*;
 import com.southernwavebank.auth_service.reponse.Response;
@@ -59,45 +64,6 @@ public class AuthServiceImpl implements AuthService{
 	 * @throws RuntimeException when user-service response is invalid or indicates failure.
 	 */
 	// completed
-	@Override
-	public ResponseEntity<Response> registerUser(RegisterRequest registerRequest) {
-		log.info("Register request received");
-		log.info("Calling user service to register the user");
-		ResponseEntity<Response> entity = webClientBuilder.build().post().uri("http://user-service/swb/users/register")
-				.bodyValue(registerRequest).exchangeToMono(clientResponse -> clientResponse.toEntity(Response.class))
-				.block(); // Blocking call to wait // for response
-		log.info("Received user service response");
-
-		if (entity == null || !entity.getStatusCode().is2xxSuccessful() || entity.getBody() == null
-				|| entity.getBody().getData() == null) {
-			log.warn("User registration failed: User service returned {}",
-					entity != null ? entity.getStatusCode() : "null");
-
-			String errorMessage = (entity != null && entity.getBody() != null) ? entity.getBody().getMessage()
-					: "Response is null";
-			throw new RuntimeException(errorMessage);
-		}
-
-		Response response = entity.getBody();
-		Map<String, Object> userData = (Map<String, Object>) response.getData();
-		String emailId = (String) userData.get("emailId");
-		String role = (String) userData.get("role");
-		String id = String.valueOf(userData.get("officerId"));
-		userTokenInfoRepo.save(new UserTokenInfo(emailId, 0));
-
-		String accessToken = jwtService.generateToken(emailId, role, 0, id, "auth-service");
-		String refreshToken = jwtService.generateRefreshToken(emailId, 0);
-
-		AuthResponse tokens = new AuthResponse();
-		tokens.setAccessToken(accessToken);
-		tokens.setRefreshToken(refreshToken);
-
-		log.info("User registered and token created");
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(Response.builder().message("JWT token created").data(tokens).build());
-
-	}
-
 	/**
 	 * Authenticate user credentials and return access and refresh tokens.
 	 * @returns ResponseEntity<AuthResponse> containing access and refresh tokens upon success.
@@ -139,17 +105,11 @@ public class AuthServiceImpl implements AuthService{
 
 		log.debug("User authenticated: {} with role {}", emailId, role);
 
-		int tokenVersion;
-		if ("CONSUMER".equalsIgnoreCase(role)) {
-			tokenVersion = userTokenInfoRepo.findById(emailId).map(UserTokenInfo::getTokenVersion).orElseGet(() -> {
-				log.info("First-time login for CONSUMER: saving token version 0");
-				userTokenInfoRepo.save(new UserTokenInfo(emailId, 0));
-				return 0;
-			});
-
-		} else {
-			tokenVersion = userTokenInfoRepo.findById(emailId).map(UserTokenInfo::getTokenVersion).get();
-		}
+		int tokenVersion = userTokenInfoRepo.findById(emailId).map(UserTokenInfo::getTokenVersion).orElseGet(() -> {
+			log.info("First-time login for {}: saving token version 0", role);
+			userTokenInfoRepo.save(new UserTokenInfo(emailId, 0));
+			return 0;
+		});
 
 		// Generate both tokens
 		String accessToken = jwtService.generateToken(emailId, role, tokenVersion, userId, "auth-service");

@@ -45,6 +45,7 @@ public class SecurityConfig {
 		return http.csrf(customizer -> customizer.disable())
 				.authorizeHttpRequests(
 						 request -> request
+						.requestMatchers("/swb/users/register").hasAuthority("SUPER_OFFICER")
 						.requestMatchers("/swb/users/create", "/swb/users/update/{emailId}").hasAuthority("OFFICER")
 						.anyRequest().permitAll()
 						)

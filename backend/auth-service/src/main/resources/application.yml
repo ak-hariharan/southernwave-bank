@@ -21,9 +21,9 @@ spring:
 
   data:
    redis:
-    host: redis-19060.c212.ap-south-1-1.ec2.redns.redis-cloud.com
-    port: 19060
-    password: FgTL2hXAeW2tT1Nh8WOikxKb77K9ql0y
+    host: redis-18475.c330.asia-south1-1.gce.cloud.redislabs.com
+    port: 18475
+    password: 41FPu023AJPRSEvrM4o76KKqb5zQdmo4
     ssl:
      enabled: false
 

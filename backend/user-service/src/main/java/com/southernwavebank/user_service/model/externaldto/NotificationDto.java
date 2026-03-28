@@ -15,6 +15,8 @@ public class NotificationDto {
 	private String username;
 	
 	private String emailId;
+
+	private Long userId;
 	
 	private String contactNumber;
 	

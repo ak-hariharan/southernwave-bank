@@ -41,12 +41,14 @@ public class UserServiceImpl implements UserService {
     private UserEventProducer userEventProducer;
     private AccountCreatedEventProducer accountCreatedEventProducer;
     private PasswordUpdationEventProducer passwordUpdateEvent;
+    private OfficerEventProducer officerEventProducer;
 
     @Autowired
     public UserServiceImpl(OfficerRepository officerRepo, UserRepository userRepo, PasswordEncoder passwordEncoder,
             ModelMapper modelMapper, UserEventProducer userEventProducer,
             AccountCreatedEventProducer accountCreatedEventProducer,
-            PasswordUpdationEventProducer passwordUpdateEvent) {
+            PasswordUpdationEventProducer passwordUpdateEvent,
+            OfficerEventProducer officerEventProducer) {
         this.officerRepo = officerRepo;
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
         this.userEventProducer = userEventProducer;
         this.accountCreatedEventProducer = accountCreatedEventProducer;
         this.passwordUpdateEvent = passwordUpdateEvent;
+        this.officerEventProducer = officerEventProducer;
     }
 
     /**
@@ -85,7 +88,9 @@ public class UserServiceImpl implements UserService {
         }
 
         log.debug("Creating new Officer entity");
-        String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());
+        // Generate a random dummy password since the actual setup happens via email OTP link
+        String dummyPassword = java.util.UUID.randomUUID().toString();
+        String hashedPassword = passwordEncoder.encode(dummyPassword);
         Officer officer = new Officer();
 
         officer.setOfficername(registerRequest.getName());
@@ -95,6 +100,14 @@ public class UserServiceImpl implements UserService {
         Officer savedOfficer = officerRepo.save(officer);
         log.info("New Officer registered successfully");
 
+        // Dispatch Welcome Email Event
+        NotificationDto welcomeNotification = new NotificationDto();
+        welcomeNotification.setEmailId(savedOfficer.getEmailId());
+        welcomeNotification.setUsername(savedOfficer.getOfficername());
+        welcomeNotification.setUserId(savedOfficer.getOfficerId());
+        welcomeNotification.setTime(LocalDateTime.now());
+        officerEventProducer.sendOfficerCreatedEvent(welcomeNotification);
+        
         registerRequest.setOfficerId(savedOfficer.getOfficerId());
         log.info("Registration process completed");
         return ResponseEntity.status(HttpStatus.OK)
@@ -403,14 +416,20 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<String> getUserEmail(Long userId) {
             log.info("Fetching user email by user ID");
 
-            String email = userRepo.findById(userId).orElseThrow(() -> {
-                log.warn("Email not found for this userid ");
-                return new ResourceNotFound(userId);
-            }).getEmailId();
+            Optional<User> optionalUser = userRepo.findById(userId);
+            if (optionalUser.isPresent()) {
+                log.info("User email fetched successfully");
+                return ResponseEntity.ok(optionalUser.get().getEmailId());
+            }
 
-            log.info("User email fetched successfully");
+            Optional<Officer> optionalOfficer = officerRepo.findById(userId);
+            if (optionalOfficer.isPresent()) {
+                log.info("Officer email fetched successfully");
+                return ResponseEntity.ok(optionalOfficer.get().getEmailId());
+            }
 
-            return ResponseEntity.ok(email);
+            log.warn("Email not found for this userid");
+            throw new ResourceNotFound(userId);
     }
 
     /**
@@ -425,14 +444,20 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<String> getContactNumber(Long userId) {
             log.info("Fetching contact number for user");
 
-            String contactNumber = userRepo.findById(userId).orElseThrow(() -> {
-                log.warn("Contact number not found for this userid");
-                return new ResourceNotFound(userId);
-            }).getContactNumber();
+            Optional<User> optionalUser = userRepo.findById(userId);
+            if (optionalUser.isPresent()) {
+                log.info("Contact number fetched successfully");
+                return ResponseEntity.ok(optionalUser.get().getContactNumber());
+            }
 
-            log.info("Contact number fetched successfully");
+            Optional<Officer> optionalOfficer = officerRepo.findById(userId);
+            if (optionalOfficer.isPresent()) {
+                log.info("Returning dummy contact number for officer");
+                return ResponseEntity.ok("999123765");
+            }
 
-            return ResponseEntity.ok(contactNumber);
+            log.warn("Contact number not found for this userid");
+            throw new ResourceNotFound(userId);
     }
 
     /**
@@ -447,14 +472,21 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> getUserData(Long userId) {
             log.info("Fetching user data for user id");
 
-            User User = userRepo.findById(userId).orElseThrow(() -> {
-                log.warn("Contact number not found for this userid");
-                return new ResourceNotFound(userId);
-            });
+            Optional<User> optionalUser = userRepo.findById(userId);
+            if (optionalUser.isPresent()) {
+                log.info("User data fetched successfully");
+                UserDto userDto = modelMapper.map(optionalUser.get(), UserDto.class);
+                return ResponseEntity.status(HttpStatus.OK).body(userDto);
+            }
 
-            log.info("User data fetched successfully");
-            UserDto userDto = modelMapper.map(User, UserDto.class);
-            return ResponseEntity.status(HttpStatus.OK).body(userDto);
+            Optional<Officer> optionalOfficer = officerRepo.findById(userId);
+            if (optionalOfficer.isPresent()) {
+                log.info("Officer data fetched successfully");
+                return ResponseEntity.status(HttpStatus.OK).body(optionalOfficer.get());
+            }
+
+            log.warn("User/Officer not found for this userid");
+            throw new ResourceNotFound(userId);
     }
 
 }

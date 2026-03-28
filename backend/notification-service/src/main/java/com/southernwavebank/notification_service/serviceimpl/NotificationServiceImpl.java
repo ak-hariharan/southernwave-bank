@@ -57,6 +57,7 @@ public class NotificationServiceImpl implements NotificationService {
 
 		String briefOfEmail = switch (eventType) {
 		case "USER_CREATED" -> "New user registered";
+		case "OFFICER_CREATED" -> "New officer registered";
 		case "ACCOUNT_CREATED" -> "Account created for new user";
 		case "ACCOUNT_STATUS" -> "Account status update";
 		case "TRANSACTION" -> "Transaction alert";
@@ -157,6 +158,21 @@ public class NotificationServiceImpl implements NotificationService {
 		    );
 		    break;
 
+		case "OFFICER_CREATED":
+		    subject = "Welcome to the Southern Wave Bank Team!";
+		    mainMessage = String.format(
+		        "Dear <b>%s</b>,<br><br>"
+		        + "Welcome to Southern Wave Bank! Your administrative Officer account has been successfully registered by a Super Officer.<br><br>"
+		        + "To ensure the highest level of security, we invite you to securely configure your own permanent password for this account before logging in.<br><br>"
+		        + "Please click the secure link below to verify your identity and set your password:<br><br>"
+		        + "👉 <b><a href=\"http://localhost:4200/landing?reset=true\">Click here to Set Your Password</a></b><br><br>"
+		        + "<i>(Note: For security reasons, you will be prompted to verify your email address to receive a secure OTP before choosing your new password).</i><br><br>"
+		        + "We are thrilled to have you on board!<br><br>"
+		        + "Thank you,<br>"
+		        + "Southern Wave Bank Administration", 
+		        dto.getUsername()
+		    );
+		    break;
 
 		case "ACCOUNT_CREATED":
 			subject = "Account Successfully Created";

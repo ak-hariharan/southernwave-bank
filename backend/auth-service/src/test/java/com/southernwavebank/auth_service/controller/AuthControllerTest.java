@@ -8,7 +8,6 @@ import com.southernwavebank.auth_service.model.dto.AuthResponse;
 import com.southernwavebank.auth_service.model.dto.ForgetPasswordRequest;
 import com.southernwavebank.auth_service.model.dto.LoginRequest;
 import com.southernwavebank.auth_service.model.dto.LogoutRequest;
-import com.southernwavebank.auth_service.model.dto.RegisterRequest;
 import com.southernwavebank.auth_service.model.dto.ResetPasswordRequest;
 import com.southernwavebank.auth_service.model.dto.TokenRefreshRequest;
 import com.southernwavebank.auth_service.reponse.Response;
@@ -58,7 +57,7 @@ public class AuthControllerTest {
         ResponseEntity<AuthResponse> responseEntity = ResponseEntity.ok(authResponse);
         when(authService.loginUser(loginRequest)).thenReturn(responseEntity);
 
-        mockMvc.perform(post("/auth/login")
+        mockMvc.perform(post("/swb/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk())
@@ -74,33 +73,11 @@ public class AuthControllerTest {
     	ResponseEntity<AuthResponse> responseEntity = ResponseEntity.ok(response);
     	when(authService.refreshToken(request)).thenReturn(responseEntity);
     	
-    	mockMvc.perform(post("/auth/refresh")
+    	mockMvc.perform(post("/swb/auth/refresh")
     			.contentType(MediaType.APPLICATION_JSON)
     			.content(objectMapper.writeValueAsString(request)))
     			.andExpect(status().isOk())
     			.andExpect(jsonPath("$.accessToken").value("token2"));
-    }
-
-    @Test
-    void testRegister() throws Exception {
-    	RegisterRequest registerRequest = RegisterRequest.builder()
-                .name("John Doe")
-                .emailId("john@example.com")
-                .password("securePassword")
-                .role(Role.OFFICER)
-                .contactNumber("1234567890")
-                .build();
-    	
-        Response response = new Response("User registered", null);
-
-        ResponseEntity<Response> responseEntity = ResponseEntity.ok(response);
-        when(authService.registerUser(registerRequest)).thenReturn(responseEntity);
-
-        mockMvc.perform(post("/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(registerRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("User registered"));
     }
 
     @Test
@@ -111,7 +88,7 @@ public class AuthControllerTest {
         ResponseEntity<Response> responseEntity = ResponseEntity.ok(response);
         when(authService.logoutUser(logoutRequest)).thenReturn(responseEntity);
 
-        mockMvc.perform(post("/auth/logout")
+        mockMvc.perform(post("/swb/auth/logout")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(logoutRequest)))
                 .andExpect(status().isOk())
@@ -123,9 +100,9 @@ public class AuthControllerTest {
     	ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest("user","test@mail.com");
         Response response = new Response("Otp generated successffully", null);
         ResponseEntity<Response> responseEntity = ResponseEntity.ok(response);
-        when(authService.forgetPassword(forgetPasswordRequest, LocalDateTime.now())).thenReturn(responseEntity);
+        when(authService.forgetPassword(org.mockito.ArgumentMatchers.eq(forgetPasswordRequest), org.mockito.ArgumentMatchers.any(LocalDateTime.class))).thenReturn(responseEntity);
 
-        mockMvc.perform(post("/auth/forget-password")
+        mockMvc.perform(post("/swb/auth/forget-password")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(forgetPasswordRequest)))
                 .andExpect(status().isOk())
@@ -140,7 +117,7 @@ public class AuthControllerTest {
         ResponseEntity<Response> responseEntity = ResponseEntity.ok(response);
         when(authService.resetPassword(email,resetPasswordRequest)).thenReturn(responseEntity);
 
-        mockMvc.perform(post("/auth/reset-password/{email}",email)
+        mockMvc.perform(post("/swb/auth/reset-password/{email}",email)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(resetPasswordRequest)))
                 .andExpect(status().isOk())
@@ -155,7 +132,7 @@ public class AuthControllerTest {
         ResponseEntity<Response> validationResponse = ResponseEntity.ok(response);
         when(authService.validateToken(token)).thenReturn(validationResponse);
 
-        mockMvc.perform(get("/auth/validate")
+        mockMvc.perform(get("/swb/auth/validate")
                 .header("Authorization", token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Valid token"));
