@@ -48,13 +48,23 @@
   font-weight: shared.$font-weight-medium;
   transition: shared.$transition-color;
   white-space: nowrap;
-  width: 100px;
+  min-width: 80px;
+  padding: 0 shared.$spacing-sm;
   text-align: center;
   display: inline-block;
 
   &:hover {
     color: shared.$color-primary;
   }
+}
+
+.header-cta {
+  @include shared.button-primary;
+  padding: shared.$spacing-xs shared.$spacing-md;
+  font-size: shared.$font-size-sm;
+  margin-left: shared.$spacing-sm;
+  min-width: 130px;
+  border-radius: shared.$radius-full;
 }
 
 .language-dropdown {

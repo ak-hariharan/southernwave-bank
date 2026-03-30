@@ -1,19 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'shared';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Subscription, map } from 'rxjs';
+import { AuthService } from 'shared';
 import { LoginModalComponent } from '../login-modal/login-modal.component';
 import { OpenAccountModalComponent } from '../open-account-modal/open-account-modal.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, SharedModule, LoginModalComponent, OpenAccountModalComponent],
+  imports: [CommonModule, SharedModule, LoginModalComponent, OpenAccountModalComponent, RouterModule],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit, OnDestroy {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   showLoginModal = false;
   loginModalInitialView: 'login' | 'forgot-pass-step1' | 'forgot-pass-step2' = 'login';
@@ -21,7 +25,10 @@ export class LandingComponent implements OnInit, OnDestroy {
   selectedLanguage = 'English';
   private querySub!: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  isLoggedIn$ = this.authService.authState$;
+  userRole$ = this.authService.authState$.pipe(map(() => this.authService.getUserRole()));
+
+  constructor() {}
 
   ngOnInit() {
     this.querySub = this.route.queryParams.subscribe(params => {
@@ -428,7 +435,7 @@ export class LandingComponent implements OnInit, OnDestroy {
         { icon: '💳', title: 'Debitkarten', description: 'Kontaktlose Zahlungen weltweit' },
         { icon: '🏠', title: 'Immobilienkredite', description: 'Wettbewerbsfähige Zinsen und schnelle Genehmigung' },
         { icon: '🛡️', title: 'Versicherung', description: 'Umfassende Deckungspläne' },
-        { icon: '📈', title: 'Investitionen', description: 'Investmentfonds und SIP-Optionen' },
+        { icon: '📈', title: 'Investitionen', description: 'Investmentfonds and SIP-Optionen' },
         { icon: '📱', title: 'UPI-Zahlungen', description: 'Sofortige Geldüberweisungen' }
       ],
       trustTitle: 'Vertraut von Millionen',
@@ -545,5 +552,9 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   openAccountInfo(): void {
     this.showAccountModal = true;
+  }
+
+  onLogout(): void {
+    this.authService.logout();
   }
 }
