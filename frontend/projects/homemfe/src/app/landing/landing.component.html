@@ -34,7 +34,7 @@
               <shared-button class="header-cta" (click)="openLogin()">{{currentTranslation.login}}</shared-button>
             </ng-container>
             <ng-container *ngIf="isLoggedIn$ | async">
-              <a *ngIf="(userRole$ | async) === 'SUPER_OFFICER'" routerLink="/register" class="header-nav-link">Register Officer</a>
+              <a *ngIf="(userRole$ | async) === 'SUPER_OFFICER'" routerLink="/dashboard/register-officer" class="header-nav-link">Register Officer</a>
               <a href="#" (click)="onLogout(); $event.preventDefault()" class="header-nav-link">Logout</a>
               <shared-button class="header-cta" routerLink="/dashboard">Go to Dashboard</shared-button>
             </ng-container>

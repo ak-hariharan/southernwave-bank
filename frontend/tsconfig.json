@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./", 
+    "baseUrl": "./",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -48,6 +48,12 @@
     },
     {
       "path": "./projects/shared/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/dashboardmfe/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/dashboardmfe/tsconfig.spec.json"
     }
   ]
 }
