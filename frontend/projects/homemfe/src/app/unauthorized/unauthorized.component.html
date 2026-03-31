@@ -1,0 +1,27 @@
+<div class="unauthorized-page hero">
+  <div class="unauthorized-card">
+    <div class="lock-icon-container">
+      <div class="lock-icon-pulse">
+        <!-- Shield / Lock Graphic -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <rect x="9" y="11" width="6" height="4" rx="1" ry="1"/>
+          <line x1="12" y1="15" x2="12" y2="17"/>
+        </svg>
+      </div>
+    </div>
+    <h1 class="title">Access Restricted</h1>
+    <p class="subtitle">Oops! It looks like you've wandered into an area reserved for Administrators.</p>
+    
+    <div class="divider"></div>
+    
+    <p class="description">
+      If you believe you should have access to this portal, please contact your systems administrator or support terminal.
+    </p>
+    
+    <div class="actions">
+      <button class="btn-primary" routerLink="/">Return to Safety</button>
+      <button class="btn-secondary" (click)="goBack()">Go Back</button>
+    </div>
+  </div>
+</div>

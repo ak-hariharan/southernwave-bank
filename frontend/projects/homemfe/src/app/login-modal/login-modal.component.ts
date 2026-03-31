@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService, LoginRequest, ForgetPasswordRequest, ResetPasswordRequest } from 'shared';
 
 type ModalView = 'login' | 'forgot-pass-step1' | 'forgot-pass-step2';
@@ -25,13 +26,15 @@ export class LoginModalComponent implements OnInit, OnDestroy, OnChanges {
 
     isLoading = false;
     errorMessage = '';
+    successMessage = '';
     showPassword = false;
     currentView: ModalView = 'login';
     pendingEmail = '';
 
     constructor(
         private fb: FormBuilder,
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -90,17 +93,20 @@ export class LoginModalComponent implements OnInit, OnDestroy, OnChanges {
 
         this.authService.login(req).subscribe({
             next: () => {
-                this.isLoading = false;
-                this.closeModal();
-
                 const role = this.authService.getUserRole();
-                if (role === 'OFFICER') {
-                    alert('Login successful! Welcome, Officer. (Redirecting to Officer Dashboard...)');
+                if (role === 'OFFICER' || role === 'SUPER_OFFICER') {
+                    this.successMessage = 'Login successful! Welcome, Officer.';
                 } else if (role === 'CONSUMER') {
-                    alert('Login successful! Welcome, Customer. (Redirecting to Consumer Dashboard...)');
+                    this.successMessage = 'Login successful! Welcome, Customer.';
                 } else {
-                    alert('Login successful, but role could not be determined.');
+                    this.successMessage = 'Login successful!';
                 }
+
+                setTimeout(() => {
+                    this.isLoading = false;
+                    this.closeModal();
+                    this.router.navigate(['/dashboard']);
+                }, 1500);
             },
             error: (err) => {
                 this.isLoading = false;
@@ -173,8 +179,11 @@ export class LoginModalComponent implements OnInit, OnDestroy, OnChanges {
         this.authService.resetPassword(this.pendingEmail, req).subscribe({
             next: () => {
                 this.isLoading = false;
-                alert('Password reset successfully! You can now log in.');
-                this.goToLogin(); // Return to login view
+                this.successMessage = 'Password reset successfully! You can now log in.';
+                setTimeout(() => {
+                    this.successMessage = '';
+                    this.goToLogin();
+                }, 3000);
             },
             error: (err) => {
                 this.isLoading = false;

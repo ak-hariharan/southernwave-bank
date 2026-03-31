@@ -30,6 +30,14 @@
             </div>
             <a href="#contact" class="header-nav-link">{{currentTranslation.contactUs}}</a>
             <a href="#faq" class="header-nav-link">{{currentTranslation.help}}</a>
+            <ng-container *ngIf="!(isLoggedIn$ | async)">
+              <shared-button class="header-cta" (click)="openLogin()">{{currentTranslation.login}}</shared-button>
+            </ng-container>
+            <ng-container *ngIf="isLoggedIn$ | async">
+              <a *ngIf="(userRole$ | async) === 'SUPER_OFFICER'" routerLink="/register" class="header-nav-link">Register Officer</a>
+              <a href="#" (click)="onLogout(); $event.preventDefault()" class="header-nav-link">Logout</a>
+              <shared-button class="header-cta" routerLink="/dashboard">Go to Dashboard</shared-button>
+            </ng-container>
           </nav>
         </div>
       </div>
@@ -40,9 +48,14 @@
         <h1 class="bank-name">{{currentTranslation.bankName}}</h1>
         <p class="tagline">{{currentTranslation.tagline}}</p>
         <div class="hero-buttons">
-          <shared-button class="btn-primary" (click)="openLogin()">{{currentTranslation.login}}</shared-button>
-          <shared-button class="btn-secondary"
-            (click)="openAccountInfo()">{{currentTranslation.openAccount}}</shared-button>
+          <ng-container *ngIf="!(isLoggedIn$ | async); else dashboardCta">
+            <shared-button class="btn-primary" (click)="openLogin()">{{currentTranslation.login}}</shared-button>
+            <shared-button class="btn-secondary"
+              (click)="openAccountInfo()">{{currentTranslation.openAccount}}</shared-button>
+          </ng-container>
+          <ng-template #dashboardCta>
+            <shared-button class="btn-primary" routerLink="/dashboard">Go to Dashboard</shared-button>
+          </ng-template>
         </div>
       </div>
       <div class="hero-visual">

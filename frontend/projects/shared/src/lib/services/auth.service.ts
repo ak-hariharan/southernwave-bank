@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { LoginRequest, AuthResponse, TOKEN_KEYS, ForgetPasswordRequest, ResetPasswordRequest, ApiResponse, TokenRefreshRequest, RegisterRequest } from '../models/auth.models';
@@ -14,6 +14,8 @@ const API_BASE = 'http://localhost:8765';
 // ============================================================================
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+    private authState = new BehaviorSubject<boolean>(this.isLoggedIn());
+    authState$ = this.authState.asObservable();
 
     constructor(private http: HttpClient) { }
 
@@ -28,7 +30,10 @@ export class AuthService {
     login(req: LoginRequest): Observable<AuthResponse> {
         return this.http
             .post<AuthResponse>(`${API_BASE}/swb/auth/login`, req)
-            .pipe(tap(res => this.saveTokens(res.accessToken, res.refreshToken)));
+            .pipe(tap(res => {
+                this.saveTokens(res.accessToken, res.refreshToken);
+                this.authState.next(true);
+            }));
     }
 
     /** Trigger forgot password flow and get OTP via email */
@@ -82,6 +87,34 @@ export class AuthService {
     /** Returns true if a valid access token exists in storage */
     isLoggedIn(): boolean {
         return !!this.getAccessToken();
+    }
+
+    /** Logout user: invalidate token on backend, clear local tokens and broadcast state */
+    logout(): void {
+        const email = this.getUserEmail();
+        if (email) {
+            // Optimistically notify backend to invalidate token
+            this.http.post(`${API_BASE}/swb/auth/logout`, { emailId: email }).subscribe({
+                next: () => {},
+                error: (err) => console.error('Backend logout failed', err)
+            });
+        }
+        this.clearTokens();
+        this.authState.next(false);
+    }
+
+    /**
+     * Decode the JWT payload and return the email (subject claim).
+     */
+    getUserEmail(): string | null {
+        const token = this.getAccessToken();
+        if (!token) return null;
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload?.sub ?? null;
+        } catch {
+            return null;
+        }
     }
 
     /**
