@@ -145,6 +145,102 @@
 					}
 				}
 			}
+		},
+		"dashboardmfe": {
+			"projectType": "application",
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
+			},
+			"root": "projects/dashboardmfe",
+			"sourceRoot": "projects/dashboardmfe/src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"tsConfig": "projects/dashboardmfe/tsconfig.app.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/dashboardmfe/public",
+								"output": "."
+							}
+						],
+						"styles": [
+							"projects/dashboardmfe/src/styles.scss"
+						],
+						"main": "projects/dashboardmfe/src/main.ts",
+						"outputPath": "dist/dashboardmfe",
+						"index": "projects\\dashboardmfe\\src\\index.html",
+						"extraWebpackConfig": "projects/dashboardmfe/webpack.config.js",
+						"commonChunk": false
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kB",
+									"maximumError": "1MB"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "4kB",
+									"maximumError": "8kB"
+								}
+							],
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/dashboardmfe/webpack.prod.config.js"
+						},
+						"development": {
+							"optimization": false,
+							"extractLicenses": false,
+							"sourceMap": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"configurations": {
+						"production": {
+							"buildTarget": "dashboardmfe:build:production",
+							"extraWebpackConfig": "projects/dashboardmfe/webpack.prod.config.js"
+						},
+						"development": {
+							"buildTarget": "dashboardmfe:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4201,
+						"publicHost": "http://localhost:4201",
+						"extraWebpackConfig": "projects/dashboardmfe/webpack.config.js"
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular/build:extract-i18n"
+				},
+				"test": {
+					"builder": "@angular/build:karma",
+					"options": {
+						"tsConfig": "projects/dashboardmfe/tsconfig.spec.json",
+						"inlineStyleLanguage": "scss",
+						"assets": [
+							{
+								"glob": "**/*",
+								"input": "projects/dashboardmfe/public"
+							}
+						],
+						"styles": [
+							"projects/dashboardmfe/src/styles.scss"
+						]
+					}
+				}
+			}
 		}
 	}
 }

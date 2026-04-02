@@ -2,8 +2,10 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
-  remotes: {
-    "dashboardmfe": "http://localhost:4201/remoteEntry.js",
+  name: 'dashboardmfe',
+
+  exposes: {
+    './routes': './projects/dashboardmfe/src/app/app.routes.ts',
   },
 
   shared: {
