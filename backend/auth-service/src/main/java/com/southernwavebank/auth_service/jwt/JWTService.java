@@ -51,7 +51,7 @@ public class JWTService {
 	        claims.put("tokenType", "access");
 	        try {
 				PrivateKey serviceKey = keyStoreLoader.getPrivateKey(targetServiceAlias);
-				return createToken(claims, username, 30 * 60 * 1000, serviceKey); // 30 minutes
+				return createToken(claims, username, 10 * 60 * 1000L, serviceKey); // 30 minutes
 			} catch (Exception e) {
 				log.error("Error loading key for alias {}: {}", targetServiceAlias, e.getMessage());
 				throw new RuntimeException("Failed to generate token for target service: " + targetServiceAlias);
@@ -63,7 +63,7 @@ public class JWTService {
 	        Map<String, Object> claims = new HashMap<>();
 	        claims.put("tokenVersion", tokenVersion);
 	        claims.put("tokenType", "refresh");
-	        return createToken(claims, username, 7 * 24 * 60 * 60 * 1000L); // 7 days
+	        return createToken(claims, username, 2 * 60 * 60 * 1000L); // 7 days
 	 }
 	 
 	 
